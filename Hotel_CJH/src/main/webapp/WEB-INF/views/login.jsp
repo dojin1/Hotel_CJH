@@ -15,5 +15,27 @@
 <input type=submit value="취소">
 </form>
 
+<table border=1>
+<%
+	int k=1;
+	for(int i=0;i<5;i++){
+		out.println("<tr>");
+		for(int j=0;j<4;j++){
+			out.println("<td align=center>"+k+"</td>");
+			k++;
+		}
+		out.print("</tr>");
+	}
+%>
+<%
+	for(int i=0;i<5;i++){
+%>
+<td align=center><%=k %></td>
+<%
+			k++;
+	}
+	out.println("</tr>");
+%>
+</table>
 </body>
 </html>

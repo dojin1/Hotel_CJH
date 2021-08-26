@@ -10,13 +10,13 @@
 <form method=get action="/app/new">
 실명: <input type="text" name=realname><br>
 아이디: <input type="text" name=userid><br>
-비밀번호: <input type="password" name=password1><br>
-비밀번호확인: <input type="password" name=password2><br>
+비밀번호: <input type="password" name=userpw><br>
+비밀번호확인: <input type="password" name=userpw><br>
 모바일: <input type="text" name=mobile><br><br>
 <input type=submit value ='회원가입'><br>
 </form>
 
-<form method=get action="/app/home">
+<form method=get action="/app/">
 <input type=submit value ='취소' action="/app/home"><br>
 </form>
 

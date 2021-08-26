@@ -9,8 +9,11 @@
 <body>
 <form method="get" action="/app/info">
 	아이디: <input type=text name=userid><br>
-	비밀번호: <input type=text name=password><br><br>
- <input type=submit value="확인">
+	비밀번호: <input type=text name=userpw><br><br>
+ <input type=submit value="확인"></form>
+<form method="get" action="/app/">
+<input type=submit value="취소">
 </form>
+
 </body>
 </html>

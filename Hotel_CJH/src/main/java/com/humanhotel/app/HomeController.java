@@ -27,20 +27,26 @@ public class HomeController {
 	@RequestMapping("/info")
 	public String viewInfo(HttpServletRequest hsr, Model model) {
 		String uid=hsr.getParameter("userid");
+		String upw=hsr.getParameter("userpw");
 		System.out.println("uid="+uid);
+		System.out.println("ups="+upw);
 		model.addAttribute("loginid",uid);
+		model.addAttribute("loginpw",upw);
 		return "viewinfo";
 	}
 	@RequestMapping("/new")
 	public String newInfo(HttpServletRequest hsr, Model model) {
 		String name=hsr.getParameter("realname");
 		String uid=hsr.getParameter("userid");
+		String upw=hsr.getParameter("userpw");
 		String mob=hsr.getParameter("mobile");
 		System.out.println("name="+name);
 		System.out.println("uid="+uid);
+		System.out.println("upw="+upw);
 		System.out.println("mob="+mob);
 		model.addAttribute("realname",name);
 		model.addAttribute("loginid",uid);
+		model.addAttribute("loginpw",upw);
 		model.addAttribute("mobile",mob);
 		return "newinfo";
 	}
@@ -50,7 +56,7 @@ public class HomeController {
 		return "login";
 	}
 	
-	@RequestMapping("/home")
+	@RequestMapping("/")
 	public String onHoem() {
 		return "home";
 	}

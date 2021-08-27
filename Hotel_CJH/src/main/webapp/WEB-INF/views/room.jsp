@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>room</title>
+<title>객실관리</title>
 </head>
 <body>
 <form method="get" action="/app/booking">

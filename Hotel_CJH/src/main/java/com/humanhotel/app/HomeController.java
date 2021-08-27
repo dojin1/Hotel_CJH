@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,20 +21,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private HttpSession session;
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping("/room")
 	public String room() {
 		return "room";
 	}
 	
-	@RequestMapping("/booking")
-	public String booking() {
-		return "booking";
-	}
-	
+	@RequestMapping(value="/booking", method = RequestMethod.POST)
+    public String booking(HttpServletRequest hsr, Model model) {
+         String userid=hsr.getParameter("userid");
+         String userpw=hsr.getParameter("userpw");
+         HttpSession session=hsr.getSession();
+         session.setAttribute("loginid",userid);
+         return "booking";
+        
+   }
 	@RequestMapping("/info")
 	public String viewInfo(HttpServletRequest hsr, Model model) {
 		String uid=hsr.getParameter("userid");

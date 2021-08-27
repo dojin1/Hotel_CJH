@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
-<%@ page session="false" %>
+<%@ page session="true" %>
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약관리</title>
 </head>
+<%
+	String loginid=(String)session.getAttribute("loginid");
+	if(!loginid.equals("juno")){
+		response.sendRedirect("/app/login");
+	}
+%>
 <body>
  <div class="0" style="float: left;">
  <form method="get" action="/app/room">
@@ -66,6 +72,7 @@
         <option>광덕산</option>
     </select>
 </div>
+
 
 </body>
 </html>

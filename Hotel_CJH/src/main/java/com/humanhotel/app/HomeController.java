@@ -24,6 +24,16 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	@RequestMapping("/room")
+	public String room() {
+		return "room";
+	}
+	
+	@RequestMapping("/booking")
+	public String booking() {
+		return "booking";
+	}
+	
 	@RequestMapping("/info")
 	public String viewInfo(HttpServletRequest hsr, Model model) {
 		String uid=hsr.getParameter("userid");

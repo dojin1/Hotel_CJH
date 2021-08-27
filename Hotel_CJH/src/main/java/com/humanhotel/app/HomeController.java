@@ -27,16 +27,27 @@ public class HomeController {
 	public String room() {
 		return "room";
 	}
-	
-	@RequestMapping(value="/booking", method = RequestMethod.POST)
-    public String booking(HttpServletRequest hsr, Model model) {
-         String userid=hsr.getParameter("userid");
-         String userpw=hsr.getParameter("userpw");
-         HttpSession session=hsr.getSession();
-         session.setAttribute("loginid",userid);
-         return "booking";
-        
-   }
+	@RequestMapping(value="/check_user",method=RequestMethod.POST)
+	public String check_user(HttpServletRequest hsr, Model model) {
+		String userid=hsr.getParameter("userid");
+		String userpw=hsr.getParameter("userpw");
+		System.out.println("userid: " +userid);
+		System.out.println("userpw: "+userpw);
+		 HttpSession session=hsr.getSession();
+		 session.setAttribute("loginid", userid);
+		 return "redirect:/booking";
+	}
+	@RequestMapping(value="/booking",method=RequestMethod.GET)
+	public String booking(HttpServletRequest hsr) {
+		return "booking";
+	}
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest hsr) {
+		HttpSession session=hsr.getSession();
+		session.invalidate();
+		return "home";
+	}
+
 	@RequestMapping("/info")
 	public String viewInfo(HttpServletRequest hsr, Model model) {
 		String uid=hsr.getParameter("userid");

@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,13 +8,10 @@
 <title>객실관리</title>
 </head>
 <body>
-<form method="get" action="/app/booking">
-<input type="submit" id="btnreserve" value="예약관리"><br><br>
-</form>
-<form method="get" action="/app/">
-<input type="submit" id="btnroom" value="로그아웃">
-</form>
 <div class="1" style="float: left; margin-top: 10px;"  >
+    <a href='/app/booking' id="roomReserve">예약관리</a>
+    <a href='/app/room' id="roomControl">객실관리</a>
+    <a href='/app/logout'>로그아웃</a><br>
 <input type="button" id="btnlist" value="객실목록"><br>
 <select id="roomselect" size="10">
     <option>백두산</option>

@@ -16,12 +16,9 @@
 %>
 <body>
  <div class="0" style="float: left;">
- <form method="get" action="/app/room">
-<input type="submit" value="객실관리">
-</form>
-<form method="get" action="/app/">
-<input type="submit" value="로그아웃"><br><br>
-</form>
+    <a href='/app/booking' id="roomReserve">예약관리</a>
+    <a href='/app/room' id="roomControl">객실관리</a>
+    <a href='/app/logout'>로그아웃</a>
 <table style="border:1px solid;">
     <td>숙박기간 <input type="date">~<input type="date"><br>
         객실분류  <select name="classroom" id="classroom">

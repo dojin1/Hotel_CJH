@@ -7,7 +7,7 @@
 <title>login page</title>
 </head>
 <body>
-<form method="post" action="/app/booking">
+<form method="post" action="/app/check_user/">
 	아이디: <input type=text name=userid><br>
 	비밀번호: <input type=text name=userpw><br><br>
  <input type=submit value="확인">

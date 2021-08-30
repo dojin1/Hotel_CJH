@@ -12,6 +12,11 @@
     <a href='/app/booking' id="roomReserve">예약관리</a>
     <a href='/app/room' id="roomControl">객실관리</a>
     <a href='/app/logout'>로그아웃</a><br>
+<select size=10 style='width:250px;'>
+ <c:forEach items="{list}" var="room">
+	<option>${room.roomcode},{room.name},${room.type},${room.howmany},${room.howmuch}</option>
+</c:forEach>
+</select>
 <input type="button" id="btnlist" value="객실목록"><br>
 <select id="roomselect" size="10">
     <option>백두산</option>

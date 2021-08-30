@@ -15,6 +15,8 @@
 <form method="get" action="/app/">
 <input type=submit value="취소">
 </form>
-
+<form method="get" action="/app/newbie">
+<input type=submit value="회원가입">
+</form>
 </body>
 </html>

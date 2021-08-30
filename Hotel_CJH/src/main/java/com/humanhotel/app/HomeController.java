@@ -23,8 +23,31 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	private HttpSession session;
 	
+	@RequestMapping("/")
+	public String onHoem() {
+		return "home";
+	}
+	@RequestMapping("/login")
+	public String getinfo() {
+		return "login";
+	}
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest hsr) {
+		HttpSession session=hsr.getSession();
+		session.invalidate();
+		return "home";
+	}
+	@RequestMapping("/newbie")
+	public String getInfo() {
+		return "newbie";
+	}
+	
 	@RequestMapping("/room")
-	public String room() {
+	public String room(HttpServletRequest hsr) {
+		HttpSession session=hsr.getSession();
+		if(session.getAttribute("loginid")==null) {
+			return "redirect:/login";
+		}
 		return "room";
 	}
 	@RequestMapping(value="/check_user",method=RequestMethod.POST)
@@ -39,51 +62,15 @@ public class HomeController {
 	}
 	@RequestMapping(value="/booking",method=RequestMethod.GET)
 	public String booking(HttpServletRequest hsr) {
-		return "booking";
-	}
-	@RequestMapping("/logout")
-	public String logout(HttpServletRequest hsr) {
 		HttpSession session=hsr.getSession();
-		session.invalidate();
-		return "home";
-	}
-
-	@RequestMapping("/info")
-	public String viewInfo(HttpServletRequest hsr, Model model) {
-		String uid=hsr.getParameter("userid");
-		String upw=hsr.getParameter("userpw");
-		System.out.println("uid="+uid);
-		System.out.println("ups="+upw);
-		model.addAttribute("loginid",uid);
-		model.addAttribute("loginpw",upw);
-		return "viewinfo";
-	}
-	@RequestMapping("/new")
-	public String newInfo(HttpServletRequest hsr, Model model) {
-		String name=hsr.getParameter("realname");
-		String uid=hsr.getParameter("userid");
-		String upw=hsr.getParameter("userpw");
-		String mob=hsr.getParameter("mobile");
-		System.out.println("name="+name);
-		System.out.println("uid="+uid);
-		System.out.println("upw="+upw);
-		System.out.println("mob="+mob);
-		model.addAttribute("realname",name);
-		model.addAttribute("loginid",uid);
-		model.addAttribute("loginpw",upw);
-		model.addAttribute("mobile",mob);
-		return "newinfo";
+		String loginid=(String)session.getAttribute("loginid");
+		if(loginid.equals("") || loginid==null) {
+			return "redirect:/login";
+		}else {
+			return "booking";
+		}
 	}
 	
-	@RequestMapping("/login")
-	public String getinfo() {
-		return "login";
-	}
-	
-	@RequestMapping("/")
-	public String onHoem() {
-		return "home";
-	}
 	@RequestMapping("/selected")
 	public String doJob(HttpServletRequest hsr, Model model) {
 		String strPath=hsr.getParameter("path");
@@ -95,4 +82,23 @@ public class HomeController {
 			return "home";
 		}
 	}
+
+	/*
+	 * @RequestMapping("/info") public String viewInfo(HttpServletRequest hsr, Model
+	 * model) { String uid=hsr.getParameter("userid"); String
+	 * upw=hsr.getParameter("userpw"); System.out.println("uid="+uid);
+	 * System.out.println("ups="+upw); model.addAttribute("loginid",uid);
+	 * model.addAttribute("loginpw",upw); return "viewinfo"; }
+	 */
+	/*
+	 * @RequestMapping("/new") public String newInfo(HttpServletRequest hsr, Model
+	 * model) { String name=hsr.getParameter("realname"); String
+	 * uid=hsr.getParameter("userid"); String upw=hsr.getParameter("userpw"); String
+	 * mob=hsr.getParameter("mobile"); System.out.println("name="+name);
+	 * System.out.println("uid="+uid); System.out.println("upw="+upw);
+	 * System.out.println("mob="+mob); model.addAttribute("realname",name);
+	 * model.addAttribute("loginid",uid); model.addAttribute("loginpw",upw);
+	 * model.addAttribute("mobile",mob); return "newinfo"; }
+	 */
+	
 }

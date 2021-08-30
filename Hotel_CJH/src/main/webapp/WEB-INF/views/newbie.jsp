@@ -12,7 +12,7 @@
 비밀번호: <input type="password" name=userpw><br>
 비밀번호확인: <input type="password" name=userpw><br>
 모바일: <input type="text" name=mobile><br><br>
-<a href='/app/'>회원가입</a>
+<a href='/app/login'>회원가입</a>
 <a href='/app/' id="cancel">취소</a>
 
 

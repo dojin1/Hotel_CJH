@@ -5,9 +5,11 @@
 <mapper namespace="com.humanhotel.app.iRoom">
 	<!-- select id="인터페이스의 메소드" resultType="인터페이스의 반환 데이터 타입" -->
    <select id="getRoomList" resultType="com.humanhotel.app.Roominfo">
-      select roomcode,roomname,typename,howmany,howmuch from room order by name
+     select a.roomcode, a.name roomname, b.name typename,a.howmany, a.howmuch
+		from room a, roomtype b
+		where a.type=b.typecode order by roomname
    </select>
    <select id="getRoomType" resultType="com.humanhotel.app.Roomtype">
-   	  select typecode,roomname from roomtype order by typecode
+   	  select typecode,name from roomtype order by typecode
    </select>
 </mapper>

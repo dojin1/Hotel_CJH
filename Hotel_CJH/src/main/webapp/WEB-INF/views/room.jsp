@@ -14,7 +14,7 @@
     <a href='/app/logout'>로그아웃</a><br>
 <select size=10 style='width:250px;'>
 	<c:forEach items="${list}" var="room">
-   		<option>${room.roomcode},${room.name},${room.type},${room.howmany},${room.howmuch}</option>
+   		<option>${room.roomcode},${room.roomname},${room.typename},${room.howmany},${room.howmuch}</option>
     </c:forEach>
 </select><br>
 <input type="button" id="btnlist" value="객실목록"><br>
@@ -30,7 +30,7 @@
 객실이름&nbsp; <input type="text" name=roomname ><br><br>
 객실분류
 <select size=5 style='width:150px;'>
-	<c:forEach items="${type}" var="type">
+	<c:forEach items="${roomtype}" var="type">
 		<option>${type.typecode},${type.name}</option>
 	</c:forEach>
 </select><br><br>
@@ -44,4 +44,8 @@
 
 </div>
 </body>
+<script src='http://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+
+</script>
 </html>

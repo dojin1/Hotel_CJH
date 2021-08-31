@@ -59,7 +59,7 @@ public class HomeController {
 		ArrayList<Roominfo> roominfo=room.getRoomList();
 		model.addAttribute("list",roominfo); 
 		ArrayList<Roomtype> roomtype=room.getRoomType();
-		model.addAttribute("type",roomtype);
+		model.addAttribute("roomtype",roomtype);
 		return "room";
 	}
 	

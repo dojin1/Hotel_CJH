@@ -16,7 +16,7 @@
 	<c:forEach items="${list}" var="room">
    		<option>${room.roomcode},${room.name},${room.type},${room.howmany},${room.howmuch}</option>
     </c:forEach>
-</select>
+</select><br>
 <input type="button" id="btnlist" value="객실목록"><br>
 <select id="roomselect" size="10">
     <option>백두산</option>
@@ -29,19 +29,18 @@
 <div class="2" style="float:left; margin-left: 100px;">
 객실이름&nbsp; <input type="text" name=roomname ><br><br>
 객실분류
-<select>
-    <option>Single Room</option>
-    <option>Double Room</option>
-    <option>Suite Room</option>
-    <option>Family Room</option>
+<select size=5 style='width:150px;'>
+	<c:forEach items="${type}" var="type">
+		<option>${type.typecode},${type.name}</option>
+	</c:forEach>
 </select><br><br>
 숙박인원&nbsp; <input type="number" min="1">명<br><br>
 
 1박요금&nbsp; <input type="text">원<br><br>
 
-<input type="button" value="등록" style="width: 80px;">
-<input type="button" value="취소" style="width: 80px;" >
-<input type="button" value="초기화" style="width: 80px;">
+<input type="button" value="등록" id=btnAdd style="width: 80px;">
+<input type="button" value="취소" id=btnDelete style="width: 80px;" >
+<input type="button" value="초기화" id=btnClear style="width: 80px;">
 
 </div>
 </body>

@@ -58,6 +58,8 @@ public class HomeController {
 		iRoom room=sqlSession.getMapper(iRoom.class); 
 		ArrayList<Roominfo> roominfo=room.getRoomList();
 		model.addAttribute("list",roominfo); 
+		ArrayList<Roomtype> roomtype=room.getRoomType();
+		model.addAttribute("type",roomtype);
 		return "room";
 	}
 	

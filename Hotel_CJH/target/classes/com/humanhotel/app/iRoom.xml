@@ -7,4 +7,7 @@
    <select id="getRoomList" resultType="com.humanhotel.app.Roominfo">
       select roomcode,name,type,howmany,howmuch from room order by name
    </select>
+   <select id="getRoomType" resultType="com.humanhotel.app.Roomtype">
+   	  select typecode,name from roomtype order by typecode
+   </select>
 </mapper>

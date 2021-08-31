@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-		
-<!--  namespace="인터페이스의 경로명+이름" -->
-<mapper namespace="com.human.app.iRoom">
-<!-- select id="인터페이스의 메소드" resultType="인터페이스의 반환데이터타입 -->
-	<select id="getRoomList" resultType="com.human.app.Roominfo">
-		select roomcode,name,type,howmany,howmuch from room order by name
-	</select>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- namespace="인터페이스 경로명+이름" -->
+<mapper namespace="com.humanhotel.app.iRoom">
+	<!-- select id="인터페이스의 메소드" resultType="인터페이스의 반환 데이터 타입" -->
+   <select id="getRoomList" resultType="com.humanhotel.app.Roominfo">
+      select roomcode,name,type,howmany,howmuch from room order by name
+   </select>
 </mapper>

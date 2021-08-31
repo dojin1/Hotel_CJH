@@ -8,6 +8,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class HomeController {
 	private HttpSession session;
 	
 	@Autowired
-	private HttpSession sqlSession;
+	private SqlSession sqlSession; 
 	
 	@RequestMapping("/")
 	public String onHoem() {
@@ -51,15 +52,15 @@ public class HomeController {
 	public String room(HttpServletRequest hsr,Model model) {
 		HttpSession session=hsr.getSession();
 		if(session.getAttribute("loginid")==null) {
-			return "redirect:/login";
-		}
-		//여기서 interface 호출하고 결과를 room.jsp에 전달.
-		iRoom room=sqlSession.getMapper(iRoom.class);
+			return "redirect:/login"; 
+		} 
+		// 여기서 interface 호출, 결과를 room.jsp로 전송.
+		iRoom room=sqlSession.getMapper(iRoom.class); 
 		ArrayList<Roominfo> roominfo=room.getRoomList();
-		System.out.println(roominfo);
-		model.addAttribute("list",roominfo);
+		model.addAttribute("list",roominfo); 
 		return "room";
 	}
+	
 	@RequestMapping(value="/check_user",method=RequestMethod.POST)
 	public String check_user(HttpServletRequest hsr, Model model) {
 		String userid=hsr.getParameter("userid");

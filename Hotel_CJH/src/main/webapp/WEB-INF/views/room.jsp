@@ -49,8 +49,8 @@
 $(document)
 .ready(function(){
 	$.post("http://localhost:8079/app/getRoomList",{},function(result){
-		
-	})
+		console.log(result);
+	},'json');
 })
 $(document)
 .on('click','#selRoom option',function(){

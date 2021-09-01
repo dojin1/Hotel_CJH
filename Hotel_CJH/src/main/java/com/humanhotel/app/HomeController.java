@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -49,9 +50,23 @@ public class HomeController {
 	public String getInfo() {
 		return "newbie";
 	}
-	@RequestMapping("/getRoomList")
+	@RequestMapping(value="/getRoomList",method=RequestMethod.POST)
+	@ResponseBody
 	public String getRoomList(HttpServletRequest hsr) {
-		iRoom
+		iRoom room=sqlSession.getMapper(iRoom.class);
+		ArrayList<Roominfo> roominfo=room.getRoomList();
+		// 찾아진 데이터로 JSONArray만들기
+		JSONArray ja = new JSONArray();
+		for(int i=0; i<roominfo.size(); i++) {
+			JSONObject jo=new JSONObject();
+			jo.put("roomcode", roominfo.get(i).getRoomcode());
+			jo.put("roomname", roominfo.get(i).getRoomname());
+			jo.put("typename", roominfo.get(i).getTypename());
+			jo.put("howmany", roominfo.get(i).getHowmany());
+			jo.put("howmuch", roominfo.get(i).getHowmuch());
+			ja.add(jo);
+		}
+		return ja.toString();
 	}
 	
 	@RequestMapping("/room")

@@ -18,4 +18,8 @@
    <insert id="doAddRoom">
    		insert into room(roomcode,name,type,howmany,howmuch) values(seq_room.nextval,#{param1},#{param2},#{param3},#{param4})
    </insert>
+   <update id="doUpdateRoom">
+   		update room set name=#{param2},type=#{param3},howmany=#{param4},howmuch=#{param5}
+   		where roomcode=#{param1}
+   </update>
 </mapper>

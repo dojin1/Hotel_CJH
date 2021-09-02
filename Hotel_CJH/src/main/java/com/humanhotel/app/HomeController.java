@@ -68,6 +68,18 @@ public class HomeController {
 		}
 		return ja.toString();
 	}
+	@RequestMapping(value="/updateRoom",method=RequestMethod.POST,
+			produces = "application/text; charaset=utf8")
+	@ResponseBody
+	public String updateRoom(HttpServletRequest hsr) {
+		iRoom room=sqlSession.getMapper(iRoom.class);
+		room.doUpdateRoom(Integer.parseInt(hsr.getParameter("roomcode")), 
+				hsr.getParameter("roomname"),
+				Integer.parseInt(hsr.getParameter("roomtype")),
+				Integer.parseInt(hsr.getParameter("howmany")),
+				Integer.parseInt(hsr.getParameter("howmuch")));
+		return "ok";
+	}
 	@RequestMapping(value="/deleteRoom",method=RequestMethod.POST,
 			produces = "application/text; charaset=utf8")
 	@ResponseBody
@@ -82,13 +94,14 @@ public class HomeController {
 	@ResponseBody
 	public String addRoom(HttpServletRequest hsr) {
 		String rname=hsr.getParameter("roomname");
-		String rtype=hsr.getParameter("roomtype");
+		int rtype=Integer.parseInt(hsr.getParameter("roomtype"));
 		int howmany=Integer.parseInt(hsr.getParameter("howmany"));
 		int howmuch=Integer.parseInt(hsr.getParameter("howmuch"));
 		iRoom room=sqlSession.getMapper(iRoom.class);
 		room.doAddRoom(rname, rtype, howmany, howmuch);
 		return "ok";
 	}
+	
 	@RequestMapping("/room")
 	public String room(HttpServletRequest hsr,Model model) {
 		HttpSession session=hsr.getSession();

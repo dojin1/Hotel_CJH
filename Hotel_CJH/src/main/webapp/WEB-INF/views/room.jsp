@@ -93,12 +93,29 @@ $(document)
 		alert('누락된 값이 있습니다.');
 		return false;
 	}
-	$.post('http://localhost:8079/app/addRoom',{roomname:roomname,roomtype:roomtype,howmany:howmany,howmuch:howmuch},
+	let roomcode=$('#roomcode').val();
+	if(roomcode==''){ // roomcode 에 값이없으면 insert 하는상황 
+		$.post('http://localhost:8079/app/addRoom',{roomname:roomname,roomtype:roomtype,howmany:howmany,howmuch:howmuch},
+				function(result){
+					if(result=='ok'){
+						location.reload();
+					}
+				},'text');
+	} else { // roomcode에 값이 있으면 update. => 선택하면 roomcode값이 잡히기 때문.
+		$.post('http://localhost:8079/app/updateRoom',{roomcode:roomcode,roomname:roomname,roomtype:roomtype,howmany:howmany,howmuch:howmuch},
+				function(result){
+					if(result=='ok'){
+						location.reload();
+					}
+				},'text');
+	}
+	
+/* 	$.post('http://localhost:8079/app/addRoom',{roomname:roomname,roomtype:roomtype,howmany:howmany,howmuch:howmuch},
 	function(result){
 		if(result=='ok'){
 			location.reload();
 		}
-	},'text')
+	},'text'); */
 })
 </script>
 </html>

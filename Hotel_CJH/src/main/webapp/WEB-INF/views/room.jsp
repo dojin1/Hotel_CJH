@@ -13,9 +13,9 @@
     <a href='/app/room' id="roomControl">객실관리</a>
     <a href='/app/logout'>로그아웃</a><br>
 <select size=10 style='width:250px;' id=selRoom>
-	<c:forEach items="${list}" var="room">
+<%-- 	<c:forEach items="${list}" var="room">
    		<option value= ${room.roomcode}>${room.roomname},${room.typename},${room.howmany},${room.howmuch}</option>
-    </c:forEach>
+    </c:forEach> --%>
 </select><br>
 <input type="button" id="btnlist" value="객실목록"><br>
 <select id="roomselect" size="10">
@@ -39,7 +39,7 @@
 1박요금&nbsp; <input type="text" id=textPay>원<br><br>
 
 <input type="button" value="등록" id=btnAdd style="width: 80px;">
-<input type="button" value="취소" id=btnDelete style="width: 80px;" >
+<input type="button" value="삭제" id=btnDelete style="width: 80px;" >
 <input type="button" value="초기화" id=btnClear style="width: 80px;">
 
 </div>
@@ -48,9 +48,13 @@
 <script>
 $(document)
 .ready(function(){
-	$.post("http://localhost:8079/app/getRoomList",{},function(result){
-		console.log(result);
-	},'json');
+   $.post("http://localhost:8079/app/getRoomList",{},function(result){
+      console.log(result);
+      $.each(result,function(ndx,value) {
+         str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
+         $('#selRoom').append(str);
+      })
+   },'json');
 })
 $(document)
 .on('click','#selRoom option',function(){
@@ -67,6 +71,34 @@ $(document)
 .on('click','#btnClear',function(){
 	$('#textName,#textType,#textNum,#textPay').val('');
 	return false;
+})
+.on('click','#btnDelete',function(){
+   $.post('http://localhost:8079/app/deleteRoom',{roomcode:$('#roomcode').val()},
+         function(result){
+      console.log(result);
+      if(result=="ok"){
+    	  $('#btnClear').trigger('click'); //입력란 비우기.
+    	  $('#selRoom option:selected').remove(); //room리스트에서 제거.
+      }
+   },'text');
+   return false;
+})
+.on('click','#btnAdd',function(){
+	let roomname=$('#textName').val();
+	let roomtype=$('#textType').val();
+	let howmany=$('#textNum').val();
+	let howmuch=$('#textPay').val();
+	// validation (유효성검사)
+	if( roomname=='' || roomtype=='' || howmany=='' || howmuch==''){
+		alert('누락된 값이 있습니다.');
+		return false;
+	}
+	$.post('http://localhost:8079/app/addRoom',{roomname:roomname,roomtype:roomtype,howmany:howmany,howmuch:howmuch},
+	function(result){
+		if(result=='ok'){
+			location.reload();
+		}
+	},'text')
 })
 </script>
 </html>

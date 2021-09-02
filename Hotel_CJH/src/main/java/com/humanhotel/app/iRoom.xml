@@ -12,4 +12,10 @@
    <select id="getRoomType" resultType="com.humanhotel.app.Roomtype">
    	  select typecode,name from roomtype order by typecode
    </select>
+   <delete id="doDeleteRoom">
+   		delete from room where roomcode=#{param1}
+   </delete>
+   <insert id="doAddRoom">
+   		insert into room(roomcode,name,type,howmany,howmuch) values(seq_room.nextval,#{param1},#{param2},#{param3},#{param4})
+   </insert>
 </mapper>

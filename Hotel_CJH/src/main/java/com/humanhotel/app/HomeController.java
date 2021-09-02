@@ -50,7 +50,7 @@ public class HomeController {
 	public String getInfo() {
 		return "newbie";
 	}
-	@RequestMapping(value="/getRoomList",method=RequestMethod.POST)
+	@RequestMapping(value="/getRoomList",method=RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String getRoomList(HttpServletRequest hsr) {
 		iRoom room=sqlSession.getMapper(iRoom.class);
@@ -68,7 +68,27 @@ public class HomeController {
 		}
 		return ja.toString();
 	}
-	
+	@RequestMapping(value="/deleteRoom",method=RequestMethod.POST,
+			produces = "application/text; charaset=utf8")
+	@ResponseBody
+	public String deleteRoom(HttpServletRequest hsr) {
+		int roomcode=Integer.parseInt(hsr.getParameter("roomcode"));
+		iRoom room=sqlSession.getMapper(iRoom.class);
+		room.doDeleteRoom(roomcode);
+		return "ok";
+	}
+	@RequestMapping(value="/addRoom",method=RequestMethod.POST,
+			produces = "application/text; charaset=utf8")
+	@ResponseBody
+	public String addRoom(HttpServletRequest hsr) {
+		String rname=hsr.getParameter("roomname");
+		String rtype=hsr.getParameter("roomtype");
+		int howmany=Integer.parseInt(hsr.getParameter("howmany"));
+		int howmuch=Integer.parseInt(hsr.getParameter("howmuch"));
+		iRoom room=sqlSession.getMapper(iRoom.class);
+		room.doAddRoom(rname, rtype, howmany, howmuch);
+		return "ok";
+	}
 	@RequestMapping("/room")
 	public String room(HttpServletRequest hsr,Model model) {
 		HttpSession session=hsr.getSession();
@@ -77,8 +97,10 @@ public class HomeController {
 		} 
 		// 여기서 interface 호출, 결과를 room.jsp로 전송.
 		iRoom room=sqlSession.getMapper(iRoom.class); 
-		ArrayList<Roominfo> roominfo=room.getRoomList();
-		model.addAttribute("list",roominfo); 
+		/*
+		 * ArrayList<Roominfo> roominfo=room.getRoomList();
+		 * model.addAttribute("list",roominfo);
+		 */
 		ArrayList<Roomtype> roomtype=room.getRoomType();
 		model.addAttribute("roomtype",roomtype);
 		return "room";

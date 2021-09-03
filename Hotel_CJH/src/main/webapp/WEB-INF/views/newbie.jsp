@@ -7,6 +7,7 @@
 <title>join membership page</title>
 </head>
 <body>
+회원가입 페이지 입니다. 아래 빈칸을 채워주세요.<br><br>
 <form method="post" action="/app/signin/">
 실명: <input type="text" name=newname ><br>
 아이디: <input type="text" name=newid ><br>

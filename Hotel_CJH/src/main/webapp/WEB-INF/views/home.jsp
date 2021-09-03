@@ -6,6 +6,7 @@
 	<title>Home</title>
 </head>
 <body>
+호텔 관리 프로그램입니다.<br><br>
 <a href='selected?path=login'>로그인</a>&nbsp;&nbsp;
 <a href='selected?path=newbie'>회원가입</a>
 </body>

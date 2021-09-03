@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약관리</title>
 </head>
-<%
+<%-- <%
 	String loginid=(String)session.getAttribute("loginid");
 	if(!loginid.equals("juno")){
 		response.sendRedirect("/app/login");
 	}
-%>
+%> --%>
 <body>
  <div class="0" style="float: left;">
     <a href='/app/booking' id="roomReserve">예약관리</a>

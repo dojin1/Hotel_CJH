@@ -8,7 +8,7 @@
 </head>
 <body>
 로그인 페이지 입니다. 아이디와 비밀번호를 입력해주세요. <br><br>
-<form method="post" action="/app/check_user/">
+<form method="post" action="/app/check_user/" id=frmLogin>
 	아이디: <input type=text name=userid><br>
 	비밀번호: <input type=text name=userpw><br><br>
  <input type=submit value="확인">
@@ -20,4 +20,22 @@
 <input type=submit value="회원가입">
 </form>
 </body>
+<script src='http://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(document)
+.on('submit','#frmLogin',function(){
+	let pstr=$.trim($('[name=userid]').val());
+	$('[name=userid]').val(pstr);
+	pstr=$.trim($('[name=userpw]').val());
+	$('[name=userpw]').val(pstr);
+	if($('[name=userid]').val()==''){
+		alert("로그인 아이디를 입력하세요.");
+		return false;
+	}
+	if($('[name=userpw]').val()==''){
+		alert("비밀번호를 입력해주세요.");
+		return false;
+	}
+})
+</script>
 </html>

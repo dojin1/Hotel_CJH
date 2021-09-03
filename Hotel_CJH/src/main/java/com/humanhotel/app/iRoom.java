@@ -9,4 +9,5 @@ public interface iRoom {
 	void doAddRoom(String roomname,int roomtype,int howmany, int howmuch);
 	void doUpdateRoom(int roomcode,String roomname,int roomtype,int howmany, int howmuch);
 	void doSignin(String name, String loginid, int passcode);
+	int doCheckUser(String userid, String userpw);
 }

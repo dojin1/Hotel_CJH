@@ -133,11 +133,16 @@ public class HomeController {
 	public String check_user(HttpServletRequest hsr, Model model) {
 		String userid=hsr.getParameter("userid");
 		String userpw=hsr.getParameter("userpw");
-		System.out.println("userid: " +userid);
-		System.out.println("userpw: "+userpw);
-		 HttpSession session=hsr.getSession();
-		 session.setAttribute("loginid", userid);
-		 return "redirect:/booking";
+		//DB에서 유저확인: 기존유저면 booking 신규유저면 home.
+		iRoom room=sqlSession.getMapper(iRoom.class); 
+		int n=room.doCheckUser(userid, userpw);
+		if(n>0) {
+			HttpSession session=hsr.getSession();
+			session.setAttribute("loginid", userid);
+			return "redirect:/booking";	// RequestMapping 의 경로이름.		
+		} else { // 비등록회원
+			return "login";
+		}
 	}
 	@RequestMapping(value="/booking",method=RequestMethod.GET)
 	public String booking(HttpServletRequest hsr) {

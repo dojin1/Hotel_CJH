@@ -25,49 +25,43 @@
             <option>Single Room</option>
             <option>Double Room</option>
             <option>Suite Room</option>
-            <option>Family Room</option></select>
-    </td>
-</table><br>
-<input type="button" value="예약가능"><br>
-<select multiple size="10">
-    <option>백두산</option>
+            <option>Family Room</option></select><br>
+<input type="button" value="예약가능 객실"><br>
+<select size=10 style='width:250px;' id=possible>
+    <option>백두산 Single Room 3 100000 </option>
     <option>한라산</option>
     <option>금강산</option>
     <option>내장산</option>
-</select>
+</select><br><br>
+    </td>
+</table><br>
 </div>
-
-
-<br><br>
-
+<br>
 <div class="2" style="float: left; margin-left: 50px;">
-
-    <td>객실이름&nbsp; <input type="text" name=room ><br><br>
-
-숙박기간&nbsp; <input type="date">~<input type="date"><br><br>
-
-숙박인원&nbsp; <input type="number" min="1">명<br><br>
-
-1박비용&nbsp; <input type="text">원<br><br>
-
-총 요금&nbsp; <input type="text">원<br><br>
-
-예약자 모바일번호 <br>
-<input type="text"><br><br>
-
-<input type="button" value="등록" style="width: 80px;">
-<input type="button" value="취소" style="width: 80px;" >
-<input type="button" value="초기화" style="width: 80px;">
-
+<table style="border:1px solid;">
+<td>객실이름&nbsp; <input type="text" name=room ><br><br>
+객실종류&nbsp; <input type="text"><br><br>
+예약인원&nbsp; <input type="number" min="1">명<br><br>
+최대인원&nbsp; <input type="text">원<br><br>
+예약기관&nbsp; <input type="date">~<input type="date"><br><br>
+예약자명   <input type="text"><br><br>
+모바일번호 <input type="text"><br><br>
+<input type="button" value="예약완료" style="width: 80px;">
+<input type="button" value="비우기" style="width: 80px;" >
+<input type="button" value="예약취소" style="width: 80px;">
+	</td>
+</table>
 </div>
-
-<div class="3" style="float:left; margin-left: 50px; margin-top: 80px;">
-    <input type="button" value="예약불가"><br>
-    <select multiple size="10">
+<div class="3" style="float:left; margin-left: 50px;">
+<table style="border:1px solid;">
+<td>
+	<input type="button" value="예약된 객실"><br>
+    <select size=10 style='width:250px;' id=impossible>
         <option>강천산</option>
         <option>태조산</option>
         <option>광덕산</option>
     </select>
+</td>
 </div>
 
 

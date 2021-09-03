@@ -16,7 +16,7 @@
 <%-- 	<c:forEach items="${list}" var="room">
    		<option value= ${room.roomcode}>${room.roomname},${room.typename},${room.howmany},${room.howmuch}</option>
     </c:forEach> --%>
-</select><br>
+</select><br><br>
 <input type="button" id="btnlist" value="객실목록"><br>
 <select id="roomselect" size="10">
     <option>백두산</option>

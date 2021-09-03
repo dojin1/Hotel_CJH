@@ -20,26 +20,28 @@
     <a href='/app/room' id="roomControl">객실관리</a>
     <a href='/app/logout'>로그아웃</a>
 <table style="border:1px solid;">
-    <td>숙박기간 <input type="date">~<input type="date"><br>
+    <td>
+    	숙박기간 <input type="date">~<input type="date"><br>
         객실분류  <select name="classroom" id="classroom">
             <option>Single Room</option>
             <option>Double Room</option>
             <option>Suite Room</option>
-            <option>Family Room</option></select><br>
+            <option>Family Room</option></select><br><br><br>
 <input type="button" value="예약가능 객실"><br>
-<select size=10 style='width:250px;' id=possible>
+<select size=10 style='width:365px; height:200px;' id=possible>
     <option>백두산 Single Room 3 100000 </option>
     <option>한라산</option>
     <option>금강산</option>
     <option>내장산</option>
 </select><br><br>
-    </td>
-</table><br>
+ </td>
+ </table>
 </div>
 <br>
 <div class="2" style="float: left; margin-left: 50px;">
 <table style="border:1px solid;">
-<td>객실이름&nbsp; <input type="text" name=room ><br><br>
+<td>
+객실이름&nbsp; <input type="text" name=room ><br><br>
 객실종류&nbsp; <input type="text"><br><br>
 예약인원&nbsp; <input type="number" min="1">명<br><br>
 최대인원&nbsp; <input type="text">원<br><br>
@@ -49,19 +51,20 @@
 <input type="button" value="예약완료" style="width: 80px;">
 <input type="button" value="비우기" style="width: 80px;" >
 <input type="button" value="예약취소" style="width: 80px;">
-	</td>
+</td>
 </table>
 </div>
 <div class="3" style="float:left; margin-left: 50px;">
 <table style="border:1px solid;">
 <td>
 	<input type="button" value="예약된 객실"><br>
-    <select size=10 style='width:250px;' id=impossible>
+    <select size=10 style='width:365px; height:310px;' id=impossible>
         <option>강천산</option>
         <option>태조산</option>
         <option>광덕산</option>
     </select>
 </td>
+</table>
 </div>
 
 

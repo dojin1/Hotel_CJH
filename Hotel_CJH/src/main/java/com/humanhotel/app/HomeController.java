@@ -50,12 +50,22 @@ public class HomeController {
 	public String getInfo() {
 		return "newbie";
 	}
+	@RequestMapping(value="/signin",method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	public String doSignin(HttpServletRequest hsr) {
+		//insert into member
+		String name=hsr.getParameter("newname");
+		String loginid=hsr.getParameter("newid");
+		int passcode=Integer.parseInt(hsr.getParameter("newpw"));
+		iRoom room=sqlSession.getMapper(iRoom.class);
+		room.doSignin(name,loginid,passcode);
+		return "login";
+	}
 	@RequestMapping(value="/getRoomList",method=RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String getRoomList(HttpServletRequest hsr) {
 		iRoom room=sqlSession.getMapper(iRoom.class);
 		ArrayList<Roominfo> roominfo=room.getRoomList();
-		// Ã£¾ÆÁø µ¥ÀÌÅÍ·Î JSONArray¸¸µé±â
+		// Ã£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ JSONArrayï¿½ï¿½ï¿½ï¿½ï¿½
 		JSONArray ja = new JSONArray();
 		for(int i=0; i<roominfo.size(); i++) {
 			JSONObject jo=new JSONObject();
@@ -108,7 +118,7 @@ public class HomeController {
 		if(session.getAttribute("loginid")==null) {
 			return "redirect:/login"; 
 		} 
-		// ¿©±â¼­ interface È£Ãâ, °á°ú¸¦ room.jsp·Î Àü¼Û.
+		// ï¿½ï¿½ï¿½â¼­ interface È£ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ room.jspï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 		iRoom room=sqlSession.getMapper(iRoom.class); 
 		/*
 		 * ArrayList<Roominfo> roominfo=room.getRoomList();

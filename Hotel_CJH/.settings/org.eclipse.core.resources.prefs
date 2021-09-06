@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/humanhotel/app/HomeController.java=UTF-8
 encoding//src/main/webapp/WEB-INF/views/booking.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/home.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/room.jsp=UTF-8

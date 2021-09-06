@@ -65,7 +65,7 @@ public class HomeController {
 	public String getRoomList(HttpServletRequest hsr) {
 		iRoom room=sqlSession.getMapper(iRoom.class);
 		ArrayList<Roominfo> roominfo=room.getRoomList();
-		// ã���� �����ͷ� JSONArray�����
+		// 찾占쏙옙占쏙옙 占쏙옙占쏙옙占싶뤄옙 JSONArray占쏙옙占쏙옙占�
 		JSONArray ja = new JSONArray();
 		for(int i=0; i<roominfo.size(); i++) {
 			JSONObject jo=new JSONObject();
@@ -111,14 +111,26 @@ public class HomeController {
 		room.doAddRoom(rname, rtype, howmany, howmuch);
 		return "ok";
 	}
-	
+	@RequestMapping(value="/Reserve",method=RequestMethod.POST,
+			produces = "application/text; charaset=utf8")
+	@ResponseBody
+	public String Reserve(HttpServletRequest hsr) {
+		int person=Integer.parseInt(hsr.getParameter("person"));
+		int checkin=Integer.parseInt(hsr.getParameter("checkin"));
+		int cherckout=Integer.parseInt(hsr.getParameter("checkout"));
+		String name=hsr.getParameter("reservename");
+		int mobile=Integer.parseInt(hsr.getParameter("mobile"));
+		iRoom room=sqlSession.getMapper(iRoom.class);
+		room.doReserve(person, checkin, cherckout, name, mobile);
+		return "ok";
+	}
 	@RequestMapping("/room")
 	public String room(HttpServletRequest hsr,Model model) {
 		HttpSession session=hsr.getSession();
 		if(session.getAttribute("loginid")==null) {
 			return "redirect:/login"; 
 		} 
-		// ���⼭ interface ȣ��, ����� room.jsp�� ����.
+		// 占쏙옙占썩서 interface 호占쏙옙, 占쏙옙占쏙옙占� room.jsp占쏙옙 占쏙옙占쏙옙.
 		iRoom room=sqlSession.getMapper(iRoom.class); 
 		/*
 		 * ArrayList<Roominfo> roominfo=room.getRoomList();
@@ -133,21 +145,24 @@ public class HomeController {
 	public String check_user(HttpServletRequest hsr, Model model) {
 		String userid=hsr.getParameter("userid");
 		String userpw=hsr.getParameter("userpw");
-		//DB에서 유저확인: 기존유저면 booking 신규유저면 home.
+		//DB�뿉�꽌 �쑀���솗�씤: 湲곗〈�쑀��硫� booking �떊洹쒖쑀��硫� home.
 		iRoom room=sqlSession.getMapper(iRoom.class); 
 		int n=room.doCheckUser(userid, userpw);
 		if(n>0) {
 			HttpSession session=hsr.getSession();
 			session.setAttribute("loginid", userid);
-			return "redirect:/booking";	// RequestMapping 의 경로이름.		
-		} else { // 비등록회원
+			return "redirect:/booking";	// RequestMapping �쓽 寃쎈줈�씠由�.		
+		} else { // 鍮꾨벑濡앺쉶�썝
 			return "login";
 		}
 	}
 	@RequestMapping(value="/booking",method=RequestMethod.GET)
-	public String booking(HttpServletRequest hsr) {
+	public String booking(HttpServletRequest hsr, Model model) {
 		HttpSession session=hsr.getSession();
 		String loginid=(String)session.getAttribute("loginid");
+		iRoom room=sqlSession.getMapper(iRoom.class);
+		ArrayList<Roomtype> roomtype=room.getRoomType();
+		model.addAttribute("roomtype",roomtype);
 		if(loginid.equals("") || loginid==null) {
 			return "redirect:/login";
 		}else {

@@ -28,4 +28,7 @@
    <select id="doCheckUser" resultType="int">
    		select count(*) from member where loginid=#{param1} and passcode=#{param2}
    </select>
+   <insert id="doReserve">
+   		insert into booking(bookcode,roomcode,person,checkin,checkout,name,mobile) values(seq_book.nextval,#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7})
+   </insert>
 </mapper>

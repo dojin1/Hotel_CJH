@@ -10,4 +10,5 @@ public interface iRoom {
 	void doUpdateRoom(int roomcode,String roomname,int roomtype,int howmany, int howmuch);
 	void doSignin(String name, String loginid, int passcode);
 	int doCheckUser(String userid, String userpw);
+	void doReserve(int person, int checkin, int checkout, String name, int mobile);
 }

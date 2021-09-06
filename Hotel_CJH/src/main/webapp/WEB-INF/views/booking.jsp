@@ -26,13 +26,10 @@
             <option>Single Room</option>
             <option>Double Room</option>
             <option>Suite Room</option>
-            <option>Family Room</option></select><br><br><br>
-<input type="button" value="예약가능 객실"><br>
-<select size=10 style='width:365px; height:200px;' id=possible>
-    <option>백두산 Single Room 3 100000 </option>
-    <option>한라산</option>
-    <option>금강산</option>
-    <option>내장산</option>
+            <option>Family Room</option></select>
+<input type="button" value="조회" id=roomSearch><br><br><br>
+<input type="button" value="예약가능 객실" ><br>
+<select size=10 style='width:365px; height:242px;' id=trueRoom>
 </select><br><br>
  </td>
  </table>
@@ -41,32 +38,87 @@
 <div class="2" style="float: left; margin-left: 50px;">
 <table style="border:1px solid;">
 <td>
-객실이름&nbsp; <input type="text" name=room ><br><br>
-객실종류&nbsp; <input type="text"><br><br>
-예약인원&nbsp; <input type="number" min="1">명<br><br>
-최대인원&nbsp; <input type="text">원<br><br>
-예약기관&nbsp; <input type="date">~<input type="date"><br><br>
-예약자명   <input type="text"><br><br>
-모바일번호 <input type="text"><br><br>
-<input type="button" value="예약완료" style="width: 80px;">
-<input type="button" value="비우기" style="width: 80px;" >
-<input type="button" value="예약취소" style="width: 80px;">
+객실이름&nbsp; <input type="text" name=room id=txtName><input type=hidden id=roomCode><br><br>
+객실종류&nbsp;
+<select size=1 style='width:150px;' id=txtType>
+	<c:forEach items="${roomtype}" var="type">
+		<option value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
+	</c:forEach>
+</select><br><br>
+예약인원&nbsp; <input type="number" min="1" id=txtNum>명<br><br>
+최대인원&nbsp; <input type="number" min="1" id=maxNum>명<br><br>
+예약기간&nbsp; <input type="date" id=txtDate1>~<input type="date" id=txtDate2><br><br>
+요금총액&nbsp; <input type="text" id=txtPay>원<br><br>
+예약자명   <input type="text" id=txtSub><br><br>
+모바일번호 <input type="text" id=txtMobile><br><br>
+<input type="button" value="예약완료" style="width: 80px;" id=btnAdd>
+<input type="button" value="예약취소" style="width: 80px;" id=btncancel>
+<input type="button" value="비우기" style="width: 80px;" id=btnEmpty>
 </td>
 </table>
 </div>
 <div class="3" style="float:left; margin-left: 50px;">
 <table style="border:1px solid;">
 <td>
-	<input type="button" value="예약된 객실"><br>
-    <select size=10 style='width:365px; height:310px;' id=impossible>
-        <option>강천산</option>
-        <option>태조산</option>
-        <option>광덕산</option>
+	<input type="button" value="예약된 객실" ><br>
+    <select size=10 style='width:600px; height:350px;' id=falseRoom>
     </select>
 </td>
 </table>
 </div>
-
-
 </body>
+<script src='http://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(document)
+.on('click','#roomSearch',function(){
+   $.post("http://localhost:8079/app/getRoomList",{},function(result){
+      console.log(result);
+      $.each(result,function(ndx,value) {
+         str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
+         $('#trueRoom').append(str);
+      })
+   },'json');
+})
+.on('click','#trueRoom option',function(){
+	let str=$(this).text();
+	let ar=str.split(','); // ','를 기준으로 자름.
+	$('#txtName').val(ar[0]);
+	$('#txtType option:contains("'+ar[1]+'")').prop('selected',true);
+	$('#maxNum').val(ar[2]);
+	$('#txtPay').val(ar[3]);
+	let code=$(this).val();
+	$('#roomCode').val(code);
+	return false;
+})
+.on('click','#btnEmpty',function(){
+	$('#txtName,#txtType,#txtNum,#maxNum,#txtDate1,#txtDate2,#txtPay,#txtSub,#txtMobile').val('');
+	return false;
+})
+.on('click','#btnAdd',function(){
+	let bookingname=$('#txtName').val();
+	let bookingtype=$('#txtType').val();
+	let howmany=$('#txtNum').val();
+	let maxnum=$('#maxNum').val();
+	let dateone=$('#txtDate1').val();
+	let datetwo=$('#txtDate2').val();
+	let howmuch=$('#txtPay').val();
+	let reservename=$('#txtSub').val();
+	let mobile=$('#txtMobile').val();
+	// validation (유효성검사)
+	/* if (bookingname=='' || bookingtype=='' || howmany=='' || maxnum=='' || dateone='' || datetwo='' || howmuch='' || reservename='' || mobile=''){
+		alert('누락된 값이 있습니다.');
+		return false;
+	} */
+	
+	let roomcode=$('#roomcode').val();
+	if(roomcode==''){ // roomcode 에 값이없으면 insert 하는상황 
+		$.post('http://localhost:8079/app/reserve',{person:person,checkin:checkin,checkout:checkout,name:name,mobile:mobile},
+				function(result){
+					if(result=='ok'){
+						location.reload();
+					}
+				},'text');
+}
+})
+</script>
 </html>

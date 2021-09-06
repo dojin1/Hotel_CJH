@@ -21,7 +21,7 @@
     <a href='/app/logout'>로그아웃</a>
 <table style="border:1px solid;">
     <td>
-    	숙박기간 <input type="date">~<input type="date"><br>
+    	숙박기간 <input type="date" id=checkin>~<input type="date" id=checkout><br>
         객실분류  <select name="classroom" id="classroom">
             <option>Single Room</option>
             <option>Double Room</option>
@@ -45,12 +45,13 @@
 		<option value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
 	</c:forEach>
 </select><br><br>
-예약인원&nbsp; <input type="number" min="1" id=txtNum>명<br><br>
+숙박인원&nbsp; <input type="number" min="1" id=txtNum>명<br><br>
 최대인원&nbsp; <input type="number" min="1" id=maxNum>명<br><br>
-예약기간&nbsp; <input type="date" id=txtDate1>~<input type="date" id=txtDate2><br><br>
-요금총액&nbsp; <input type="text" id=txtPay>원<br><br>
+숙박기간&nbsp; <input type="date" id=txtDate1>~<input type="date" id=txtDate2><br><br>
+총숙박비&nbsp; <input type="text" id=txtPay>원<br><br><input type=hidden id=price>
 예약자명   <input type="text" id=txtSub><br><br>
 모바일번호 <input type="text" id=txtMobile><br><br>
+
 <input type="button" value="예약완료" style="width: 80px;" id=btnAdd>
 <input type="button" value="예약취소" style="width: 80px;" id=btncancel>
 <input type="button" value="비우기" style="width: 80px;" id=btnEmpty>
@@ -72,6 +73,7 @@
 $(document)
 .on('click','#roomSearch',function(){
    $.post("http://localhost:8079/app/getRoomList",{},function(result){
+	  $('trueRoom').empty();
       console.log(result);
       $.each(result,function(ndx,value) {
          str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
@@ -87,6 +89,8 @@ $(document)
 	$('#maxNum').val(ar[2]);
 	$('#txtPay').val(ar[3]);
 	let code=$(this).val();
+	$('#txtDate1').val($('#checkin').val());
+	$('#txtDate2').val($('#checkout').val());
 	$('#roomCode').val(code);
 	return false;
 })
@@ -95,30 +99,8 @@ $(document)
 	return false;
 })
 .on('click','#btnAdd',function(){
-	let bookingname=$('#txtName').val();
-	let bookingtype=$('#txtType').val();
-	let howmany=$('#txtNum').val();
-	let maxnum=$('#maxNum').val();
-	let dateone=$('#txtDate1').val();
-	let datetwo=$('#txtDate2').val();
-	let howmuch=$('#txtPay').val();
-	let reservename=$('#txtSub').val();
-	let mobile=$('#txtMobile').val();
-	// validation (유효성검사)
-	/* if (bookingname=='' || bookingtype=='' || howmany=='' || maxnum=='' || dateone='' || datetwo='' || howmuch='' || reservename='' || mobile=''){
-		alert('누락된 값이 있습니다.');
-		return false;
-	} */
+
 	
-	let roomcode=$('#roomcode').val();
-	if(roomcode==''){ // roomcode 에 값이없으면 insert 하는상황 
-		$.post('http://localhost:8079/app/reserve',{person:person,checkin:checkin,checkout:checkout,name:name,mobile:mobile},
-				function(result){
-					if(result=='ok'){
-						location.reload();
-					}
-				},'text');
-}
 })
 </script>
 </html>

@@ -45,10 +45,11 @@
 		<option value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
 	</c:forEach>
 </select><br><br>
-숙박인원&nbsp; <input type="number" min="1" id=txtNum>명<br><br>
-최대인원&nbsp; <input type="number" min="1" id=maxNum>명<br><br>
-숙박기간&nbsp; <input type="date" id=txtDate1>~<input type="date" id=txtDate2><br><br>
-총숙박비&nbsp; <input type="text" id=txtPay>원<br><br><input type=hidden id=price>
+숙박인원&nbsp; <input type="number" min="1" dafault=1 id=txtNum>명<br><br>
+최대인원&nbsp; <input type="number" min="1" dafault=1 id=maxNum>명<br><br>
+숙박기간&nbsp; <input type="date" id=checkin1>~<input type="date" id=checkout1><br><br>
+1박요금&nbsp; <input type="number" min="1" dafault=1  id=txtPay>원<br><br>
+총숙박비&nbsp; <input type="number" id=price>원<br><br>
 예약자명   <input type="text" id=txtSub><br><br>
 모바일번호 <input type="text" id=txtMobile><br><br>
 
@@ -81,26 +82,90 @@ $(document)
       })
    },'json');
 })
+
 .on('click','#trueRoom option',function(){
+	$('#roomCode').val($(this).val());
 	let str=$(this).text();
 	let ar=str.split(','); // ','를 기준으로 자름.
 	$('#txtName').val(ar[0]);
 	$('#txtType option:contains("'+ar[1]+'")').prop('selected',true);
 	$('#maxNum').val(ar[2]);
-	$('#txtPay').val(ar[3]);
+	$('#txtPay').val(ar[3]); //1박요금
 	let code=$(this).val();
-	$('#txtDate1').val($('#checkin').val());
-	$('#txtDate2').val($('#checkout').val());
-	$('#roomCode').val(code);
+	$('#checkin1').val($('#checkin').val());
+	$('#checkout1').val($('#checkout').val());
+	$('#checkin1,#checkout1').trigger('change');
 	return false;
 })
 .on('click','#btnEmpty',function(){
-	$('#txtName,#txtType,#txtNum,#maxNum,#txtDate1,#txtDate2,#txtPay,#txtSub,#txtMobile').val('');
+	$('#txtName,#txtType,#txtNum,#maxNum,#checkin1,#checkout1,#txtPay,#txtSub,#txtMobile,#price').val('');
 	return false;
 })
 .on('click','#btnAdd',function(){
-
-	
+	if($('#txtName').val()==''){
+		alert('객실을 선택해주세요')
+	}
+	if($('#txtNum').val()==''|| isNaN($('#txtNum').val())){
+		alert('숙박인원 입력해주세요');
+		return false;
+	}
+	if($('#maxNum').val()==''||isNaN($('#maxNum').val())){
+		alert('총숙박(가능)인원이 입력되어야 합니다.')
+		return false;
+	}
+	if($('#checkin1').val()=='' || $('#checkout1').val()==''){
+		alert('숙박기간이 입력되어야 합니다.')
+		return false;
+	}
+	if($('#txtPay').val()==''){
+		alert('총숙박비가 입력되어야 합니다.')
+		return false;
+	}
+	if($('#txtSub').val()==''){
+		alert('예약자명이 입력되어야 합니다.')
+		return false;
+	}
+	if($('#txtMobile').val()==''){
+		alert('예약자의 연락처가 입력되어야 합니다.')
+		return false;
+	}
+	//console.log($('#roomCode').val(),$('#txtNum').val(),$('#checkin1').val(),$('#checkout1').val(),$('#txtPay').val(),$('#txtSub').val(),$('#txtMobile').val());
+	$.post('http://localhost:8079/app/Reserve',
+			{roomcode:$('#roomCode').val(),howmany:$('#txtNum').val(),
+			checkin:$('#checkin1').val(),checkout:$('#checkout1').val(),
+			total:$('#txtPay').val(),booker:$('#txtSub').val(),
+			 mobile:$('#txtMobile').val()},
+			 function(result){
+				if(result=='ok'){
+					pstr='<option value="'+$('#roomCode').val()+'">'+
+					 $('#txtName').val()+','+$('#txtType option:selected').text()+','+
+			         $('#txtNum').val()+'/'+$('#maxNum').val()+','+
+			         $('#checkin1').val()+'~'+$('#checkout1').val()+','+
+					 $('#txtSub').val()+','+$('#txtMobile').val()+'</option>';
+			         $('#falseRoom').append(pstr);
+			         $('#txtName,#txtType,#txtNum,#maxNum,#checkin1,#checkout1,#txtPay,#txtSub,#txtMobile,#price').val('');
+				} else{
+					alert('예약이 완료되지 않았습니다.(DB오류)');
+				}
+	},'text');
+	return false;
 })
+
+.on('change','#checkin1,#checkout1',function(){
+	let checkin=$('#checkin1').val();
+	let checkout=$('#checkout1').val();
+	if(checkin==''|| checkout=='') return false;
+	checkin=new Date(checkin);
+	checkout=new Date(checkout);
+	if(checkin > checkout){
+		alert('체크인날짜가 체크아웃보다 나중일 수 없습니다.'); return false;
+	}
+	let ms=Math.abs(checkout-checkin);
+	let days=Math.ceil(ms/(1000*60*60*24));
+	let total=days*parseInt($('#txtPay').val());
+	$('#price').val(total);
+	return false;
+})
+
 </script>
 </html>

@@ -115,13 +115,15 @@ public class HomeController {
 			produces = "application/text; charaset=utf8")
 	@ResponseBody
 	public String Reserve(HttpServletRequest hsr) {
-		int person=Integer.parseInt(hsr.getParameter("person"));
-		int checkin=Integer.parseInt(hsr.getParameter("checkin"));
-		int cherckout=Integer.parseInt(hsr.getParameter("checkout"));
-		String name=hsr.getParameter("reservename");
-		int mobile=Integer.parseInt(hsr.getParameter("mobile"));
+		int roomcode=Integer.parseInt(hsr.getParameter("roomcode"));
+		int howmany=Integer.parseInt(hsr.getParameter("howmany"));
+		String checkin=hsr.getParameter("checkin");
+		String checkout=hsr.getParameter("checkout");
+		int total=Integer.parseInt(hsr.getParameter("total"));
+		String booker=hsr.getParameter("booker");
+		String mobile=hsr.getParameter("mobile");
 		iRoom room=sqlSession.getMapper(iRoom.class);
-		room.doReserve(person, checkin, cherckout, name, mobile);
+		room.doReserve(roomcode, howmany, checkin, checkout, total, booker, mobile);
 		return "ok";
 	}
 	@RequestMapping("/room")

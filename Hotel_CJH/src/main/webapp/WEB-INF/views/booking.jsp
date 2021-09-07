@@ -22,11 +22,12 @@
 <table style="border:1px solid;">
     <td>
     	숙박기간 <input type="date" id=checkin>~<input type="date" id=checkout><br>
-        객실분류  <select name="classroom" id="classroom">
-            <option>Single Room</option>
-            <option>Double Room</option>
-            <option>Suite Room</option>
-            <option>Family Room</option></select>
+        객실분류  <select name="classroom" id="classRoom">
+        <option value='all'>전체</option>
+         		<c:forEach items="${roomtype}" var="type">
+					<option value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
+		  		</c:forEach>
+            </select>
 <input type="button" value="조회" id=roomSearch><br><br><br>
 <input type="button" value="예약가능 객실" ><br>
 <select size=10 style='width:365px; height:242px;' id=trueRoom>
@@ -129,6 +130,14 @@ $(document)
 		alert('예약자의 연락처가 입력되어야 합니다.')
 		return false;
 	}
+	if($('#txtNum').val()>$('#maxNum').val()){
+		alert('숙박인원이 최대인원을 넘을순 없어요!')
+		return false;
+	}
+	if($('#checkout1').val()<=$('#checkin1').val()){
+		alert('체크아웃 날짜는 체크인날짜 이후로 정해주세요!')
+		return false;
+	}
 	//console.log($('#roomCode').val(),$('#txtNum').val(),$('#checkin1').val(),$('#checkout1').val(),$('#txtPay').val(),$('#txtSub').val(),$('#txtMobile').val());
 	$.post('http://localhost:8079/app/Reserve',
 			{roomcode:$('#roomCode').val(),howmany:$('#txtNum').val(),
@@ -138,10 +147,10 @@ $(document)
 			 function(result){
 				if(result=='ok'){
 					pstr='<option value="'+$('#roomCode').val()+'">'+
-					 $('#txtName').val()+','+$('#txtType option:selected').text()+','+
-			         $('#txtNum').val()+'/'+$('#maxNum').val()+','+
-			         $('#checkin1').val()+'~'+$('#checkout1').val()+','+
-					 $('#txtSub').val()+','+$('#txtMobile').val()+'</option>';
+					 '<'+$('#txtName').val()+'> '+$('#txtType option:selected').text()+' '+
+			         $('#txtNum').val()+'/'+$('#maxNum').val()+' '+
+			         $('#checkin1').val()+'~'+$('#checkout1').val()+' '+
+					 $('#txtSub').val()+' '+$('#txtMobile').val()+'</option>';
 			         $('#falseRoom').append(pstr);
 			         $('#txtName,#txtType,#txtNum,#maxNum,#checkin1,#checkout1,#txtPay,#txtSub,#txtMobile,#price').val('');
 				} else{

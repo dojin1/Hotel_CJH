@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>객실관리</title>
 </head>
+ <style>
+     @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+     body,input,select {
+       font-family: 'Gowun Batang', serif; 
+       }
+  </style>
 <body>
 <div class="1" style="float: left;">
     <a href='/app/booking' id="roomReserve">예약관리</a>

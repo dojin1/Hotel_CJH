@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약관리</title>
 </head>
-<%-- <%
-	String loginid=(String)session.getAttribute("loginid");
-	if(!loginid.equals("juno")){
-		response.sendRedirect("/app/login");
-	}
-%> --%>
+  <style>
+     @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+     body,input,select {
+       font-family: 'Gowun Batang', serif; 
+       }
+  </style>
 <body>
  <div class="0" style="float: left;">
     <a href='/app/booking' id="roomReserve">예약관리</a>
@@ -54,8 +54,8 @@
 모바일번호 <input type="text" id=txtMobile><br><br>
 
 <input type="button" value="예약완료" style="width: 80px;" id=btnAdd>
-<input type="button" value="예약취소" style="width: 80px;" id=btncancel>
 <input type="button" value="비우기" style="width: 80px;" id=btnEmpty>
+<input type="button" value="예약취소" style="width: 80px;" id=btncancel>
 </td>
 </table>
 </div>
@@ -158,7 +158,7 @@ $(document)
 	checkin=new Date(checkin);
 	checkout=new Date(checkout);
 	if(checkin > checkout){
-		alert('체크인날짜가 체크아웃보다 나중일 수 없습니다.'); return false;
+		alert('체크아웃 날짜는 체크인 날짜 이후로 선택해주세요!'); return false;
 	}
 	let ms=Math.abs(checkout-checkin);
 	let days=Math.ceil(ms/(1000*60*60*24));

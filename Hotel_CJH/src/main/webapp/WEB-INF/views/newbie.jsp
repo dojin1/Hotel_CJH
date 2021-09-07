@@ -6,6 +6,12 @@
 <meta charset="UTF-8">
 <title>join membership page</title>
 </head>
+ <style>
+     @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+     body,input,select {
+       font-family: 'Gowun Batang', serif; 
+       }
+  </style>
 <body>
 회원가입 페이지 입니다. 아래 빈칸을 채워주세요.<br><br>
 <form method="post" action="/app/signin/">

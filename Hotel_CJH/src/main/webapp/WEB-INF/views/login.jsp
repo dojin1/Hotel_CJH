@@ -6,6 +6,12 @@
 <meta charset="UTF-8">
 <title>login page</title>
 </head>
+ <style>
+     @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+     body,input,select {
+       font-family: 'Gowun Batang', serif; 
+       }
+  </style>
 <body>
 로그인 페이지 입니다. 아이디와 비밀번호를 입력해주세요. <br><br>
 <form method="post" action="/app/check_user/" id=frmLogin>

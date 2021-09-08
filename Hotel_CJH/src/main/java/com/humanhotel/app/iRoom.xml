@@ -15,12 +15,19 @@
    <delete id="doDeleteRoom">
    		delete from room where roomcode=#{param1}
    </delete>
+   <delete id="doDeleteBook">
+   		delete from booking where bookcode=#{param1}
+   </delete>
    <insert id="doAddRoom">
    		insert into room(roomcode,name,type,howmany,howmuch) values(seq_room.nextval,#{param1},#{param2},#{param3},#{param4})
    </insert>
    <update id="doUpdateRoom">
    		update room set name=#{param2},type=#{param3},howmany=#{param4},howmuch=#{param5}
    		where roomcode=#{param1}
+   </update>
+    <update id="doUpdateBook">
+   		update booking set howmany=#{param2},booker=#{param3},mobile=#{param4}
+   		where bookcode=#{param1}
    </update>
    <insert id="doSignin">
    		insert into member(name,loginid,passcode) values(#{param1},#{param2},#{param3})
@@ -31,4 +38,17 @@
    <insert id="doReserve">
    		insert into booking values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7},seq_book.nextval)
    </insert>
+  <select id="doFindBooker" resultType="com.humanhotel.app.Booked">
+  		SELECT A.ROOMCODE, A.NAME ROOMNAME, B.NAME ROOMTYPE, A.HOWMANY MAX_HOWMANY, A.HOWMUCH, C.CHECKIN, C.CHECKOUT, C.BOOKCODE, C.MOBILE, C.BOOKER, C.HOWMANY
+		FROM ROOM A INNER JOIN ROOMTYPE B ON A.TYPE = B.TYPECODE LEFT JOIN BOOKING C ON A.ROOMCODE = C.ROOMCODE
+		<![CDATA[WHERE C.CHECKIN >= #{param1} AND C.CHECKOUT <= #{param2}]]> ORDER BY C.CHECKIN
+  </select>
+   <select id="doFindAbleBooker" resultType="com.humanhotel.app.Booked">
+		SELECT A.ROOMCODE, A.NAME ROOMNAME, B.NAME ROOMTYPE, A.HOWMANY MAX_HOWMANY, A.HOWMUCH
+		FROM ROOM A INNER JOIN ROOMTYPE B ON A.TYPE = B.TYPECODE LEFT JOIN BOOKING C ON A.ROOMCODE = C.ROOMCODE
+		WHERE A.ROOMCODE IN
+		(SELECT ROOMCODE FROM ROOM MINUS
+		SELECT ROOMCODE FROM BOOKING
+		<![CDATA[WHERE C.CHECKIN >= #{param1} AND C.CHECKOUT <= #{param2})]]> ORDER BY A.ROOMCODE
+   </select>
 </mapper>

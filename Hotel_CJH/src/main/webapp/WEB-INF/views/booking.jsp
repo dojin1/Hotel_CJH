@@ -39,7 +39,7 @@
 <div class="2" style="float: left; margin-left: 50px;">
 <table style="border:1px solid;">
 <td>
-객실이름&nbsp; <input type="text" name=room id=txtName><input type=hidden id=roomCode><br><br>
+객실이름&nbsp; <input type="text" name=room id=txtName><input type=hidden id=bookcode><input type=hidden id=roomcode><br><br>
 객실종류&nbsp;
 <select size=1 style='width:150px;' id=txtType>
 	<c:forEach items="${roomtype}" var="type">
@@ -64,7 +64,7 @@
 <table style="border:1px solid;">
 <td>
 	<input type="button" value="예약된 객실" ><br>
-    <select size=10 style='width:600px; height:350px;' id=falseRoom>
+    <select size=10 style='width:600px; height:350px;' id=falseRoom onchange="getInfo(this.value)">
     </select>
 </td>
 </table>
@@ -74,18 +74,34 @@
 <script>
 $(document)
 .on('click','#roomSearch',function(){
-   $.post("http://localhost:8079/app/getRoomList",{},function(result){
-	  $('trueRoom').empty();
-      console.log(result);
+	$('#trueRoom').empty();
+	$('#falseRoom').empty();
+	let checkin = $('#checkin').val(); 
+	let checkout = $('#checkout').val();
+	//예약가능객실
+   $.post("http://localhost:8079/app/searchAbleRoom",{checkin:checkin,checkout:checkout},function(result){
+	  $('#trueRoom').empty();
+      //console.log(result);
       $.each(result,function(ndx,value) {
-         str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
+         str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['typename']+','+value['max_howmany']+','+value['howmuch']+'</option>';
          $('#trueRoom').append(str);
       })
+   },'json');
+   
+	//예약된객실
+   $.post("http://localhost:8079/app/searchRoom",{checkin:checkin,checkout:checkout},function(result){
+	   console.log(checkin,checkout);
+	   $.each(result,function(ndx,value){
+		   str='<option value="'+value['bookcode']+'" >'+value['roomname']+','+value['typename']+','+value['howmany']+','+value['booker']+','+value['mobile']+'['+value['checkin']+'~'+value['checkout']+']</option>'+
+		   '<option id="a'+value['bookcode']+'" style="display:none;" >'+value['roomname']+','+value['typename']+','+value['howmany']+','+value['max_howmany']+','+value['checkin']+','+value['checkout']+','+value['howmuch']+','+value['booker']+','+value['mobile']+','+value['bookcode']+'</option>';
+		   $('#falseRoom').append(str);
+	   })
    },'json');
 })
 
 .on('click','#trueRoom option',function(){
-	$('#roomCode').val($(this).val());
+	$('#txtName,#txtType,#txtNum,#txtSub,#txtMobile,#price,#bookcode').val('');
+	$('#roomcode').val($(this).val()); //이거 안지우길 잘했다^^ 굿
 	let str=$(this).text();
 	let ar=str.split(','); // ','를 기준으로 자름.
 	$('#txtName').val(ar[0]);
@@ -98,10 +114,24 @@ $(document)
 	$('#checkin1,#checkout1').trigger('change');
 	return false;
 })
+
 .on('click','#btnEmpty',function(){
-	$('#txtName,#txtType,#txtNum,#maxNum,#checkin1,#checkout1,#txtPay,#txtSub,#txtMobile,#price').val('');
+	$('#txtName,#txtType,#txtNum,#maxNum,#checkin1,#checkout1,#txtPay,#txtSub,#txtMobile,#price,#bookcode').val('');
 	return false;
 })
+
+.on('click','#btncancel',function(){
+	$.post('http://localhost:8079/app/deleteBook',{bookcode:$('#bookcode').val()},
+	      function(result){
+	      console.log(result);
+	      if(result=="ok"){
+	    	  $('#btnEmpty').trigger('click'); //입력란 비우기.
+	    	  $('#falseRoom option:selected').remove(); //room리스트에서 제거.
+	      }
+	   },'text');
+	   return false;
+})
+
 .on('click','#btnAdd',function(){
 	if($('#txtName').val()==''){
 		alert('객실을 선택해주세요')
@@ -139,24 +169,40 @@ $(document)
 		return false;
 	}
 	//console.log($('#roomCode').val(),$('#txtNum').val(),$('#checkin1').val(),$('#checkout1').val(),$('#txtPay').val(),$('#txtSub').val(),$('#txtMobile').val());
-	$.post('http://localhost:8079/app/Reserve',
-			{roomcode:$('#roomCode').val(),howmany:$('#txtNum').val(),
-			checkin:$('#checkin1').val(),checkout:$('#checkout1').val(),
-			total:$('#txtPay').val(),booker:$('#txtSub').val(),
-			 mobile:$('#txtMobile').val()},
-			 function(result){
-				if(result=='ok'){
-					pstr='<option value="'+$('#roomCode').val()+'">'+
-					 '<'+$('#txtName').val()+'> '+$('#txtType option:selected').text()+' '+
-			         $('#txtNum').val()+'/'+$('#maxNum').val()+' '+
-			         $('#checkin1').val()+'~'+$('#checkout1').val()+' '+
-					 $('#txtSub').val()+' '+$('#txtMobile').val()+'</option>';
-			         $('#falseRoom').append(pstr);
-			         $('#txtName,#txtType,#txtNum,#maxNum,#checkin1,#checkout1,#txtPay,#txtSub,#txtMobile,#price').val('');
-				} else{
-					alert('예약이 완료되지 않았습니다.(DB오류)');
-				}
-	},'text');
+	
+	let howmany=$('#txtNum').val();
+	let booker=$('#txtSub').val();
+	let mobile=$('#txtMobile').val();
+	if(howmany=='' || booker=='' || mobile==''){
+		alert('누락된 값이 있습니다.');
+		return false;
+	}
+	let bookcode=$('#bookcode').val();
+	if(bookcode==''){ //bookcode에 값이 없으면 insert..
+		console.log($('#roomcode').val(),$('#txtNum').val(),$('#checkin1').val(),$('#checkout1').val(),$('#price').val(),$('#txtSub').val(),$('#txtMobile').val());
+		$.post('http://localhost:8079/app/Reserve',
+				{roomcode:$('#roomcode').val(),howmany:$('#txtNum').val(),
+				checkin:$('#checkin1').val(),checkout:$('#checkout1').val(),
+				total:$('#price').val(),booker:$('#txtSub').val(),
+				 mobile:$('#txtMobile').val()},
+				 function(result){
+					if(result=='ok'){
+						$('#roomSearch').trigger('click');
+						$('#btnEmpty').trigger('click');
+					} else{
+						alert('예약이 완료되지 않았습니다.(DB오류)');
+					}
+		},'text');
+	} else { //bookcode에 값이 있으면 update
+		$.post('http://localhost:8079/app/updateBook',{bookcode:bookcode,howmany:howmany,booker:booker,mobile:mobile},
+			function(result){
+			if(result=='ok'){
+				$('#roomSearch').trigger('click');
+				$('#btnEmpty').trigger('click');
+			}
+		},'text');
+	}
+	
 	return false;
 })
 
@@ -175,6 +221,25 @@ $(document)
 	$('#price').val(total);
 	return false;
 })
-
+function getInfo(num) {
+	let str=$("#a"+num).text();
+	let ar=str.split(','); // ','를 기준으로 자름.
+	
+	$('#txtName').val(ar[0]);
+	$('#txtType option:contains("'+ar[1]+'")').prop('selected',true);
+	$('#txtNum').val(ar[2]);
+	$('#maxNum').val(ar[3]);
+	$('#checkin1').val(ar[4]);
+	$('#checkout1').val(ar[5]);
+	$('#txtPay').val(ar[6]); //1박요금
+	$('#txtSub').val(ar[7]);
+	$('#txtMobile').val(ar[8]);
+	
+	$('#checkin1,#checkout1').trigger('change');
+	
+	$('#bookcode').val(ar[9]);
+	console.log($('#bookcode').val());
+	return false;
+}
 </script>
 </html>

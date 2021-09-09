@@ -9,7 +9,6 @@
  <style>
      @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
      body,input,select {
-       font-family: 'Gowun Batang', serif; 
        }
   </style>
 <body>

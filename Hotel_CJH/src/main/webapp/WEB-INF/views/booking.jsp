@@ -39,18 +39,18 @@
 <div class="2" style="float: left; margin-left: 50px;">
 <table style="border:1px solid;">
 <td>
-객실이름&nbsp; <input type="text" name=room id=txtName><input type=hidden id=bookcode><input type=hidden id=roomcode><br><br>
+객실이름&nbsp; <input type="text" name=room id=txtName readonly><input type=hidden id=bookcode><input type=hidden id=roomcode><br><br>
 객실종류&nbsp;
 <select size=1 style='width:150px;' id=txtType>
-	<c:forEach items="${roomtype}" var="type">
-		<option value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
+	<c:forEach items="${roomtype}" var="type" >
+		<option  disabled="disabled" value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
 	</c:forEach>
 </select><br><br>
 숙박인원&nbsp; <input type="number" min="1" dafault=1 id=txtNum>명<br><br>
-최대인원&nbsp; <input type="number" min="1" dafault=1 id=maxNum>명<br><br>
-숙박기간&nbsp; <input type="date" id=checkin1>~<input type="date" id=checkout1><br><br>
-1박요금&nbsp; <input type="number" min="1" dafault=1  id=txtPay>원<br><br>
-총숙박비&nbsp; <input type="number" id=price>원<br><br>
+최대인원&nbsp; <input type="number" min="1" dafault=1 id=maxNum readonly>명<br><br>
+숙박기간&nbsp; <input type="date" id=checkin1 readonly>~<input type="date" id=checkout1 readonly><br><br>
+1박요금&nbsp; <input type="number" min="1" dafault=1  id=txtPay readonly>원<br><br>
+총숙박비&nbsp; <input type="number" id=price readonly>원<br><br>
 예약자명   <input type="text" id=txtSub><br><br>
 모바일번호 <input type="text" id=txtMobile><br><br>
 

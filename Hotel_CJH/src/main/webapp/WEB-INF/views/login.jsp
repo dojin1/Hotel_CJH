@@ -15,14 +15,14 @@
 <body>
 로그인 페이지 입니다. 아이디와 비밀번호를 입력해주세요. <br><br>
 <form method="post" action="/app/check_user/" id=frmLogin>
-	아이디: <input type=text name=userid><br>
+	아이디명: <input type=text name=userid><br><br>
 	비밀번호: <input type=text name=userpw><br><br>
  <input type=submit value="확인">
  </form>
-<form method="get" action="/app/">
+<form method="get" action="/app/" style=padding-top:10px;>
 <input type=submit value="취소">
 </form>
-<form method="get" action="/app/newbie">
+<form method="get" action="/app/newbie" style=padding-top:10px;>
 <input type=submit value="회원가입">
 </form>
 </body>
@@ -40,6 +40,10 @@ $(document)
 	}
 	if($('[name=userpw]').val()==''){
 		alert("비밀번호를 입력해주세요.");
+		return false;
+	}
+	if($('[name=userid]').val()!='ad'){
+		alert("등록되지 않은 아이디입니다.");
 		return false;
 	}
 })

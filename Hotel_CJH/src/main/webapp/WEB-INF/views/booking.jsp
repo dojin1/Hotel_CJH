@@ -21,7 +21,7 @@
     <a href='/app/logout'>로그아웃</a>
 <table style="border:1px solid;">
     <td>
-    	숙박기간 <input type="date" id=checkin>~<input type="date" id=checkout><br>
+    	숙박기간 <input type="date" id=checkin>~<input type="date" id=checkout><br><br>
         객실분류  <select name="classroom" id="classRoom">
         <option value='all'>전체</option>
          		<c:forEach items="${roomtype}" var="type">
@@ -64,7 +64,7 @@
 <table style="border:1px solid;">
 <td>
 	<input type="button" value="예약된 객실" ><br>
-    <select size=10 style='width:600px; height:350px;' id=falseRoom onchange="getInfo(this.value)">
+    <select size=10 style='width:600px; height:450px;' id=falseRoom onchange="getInfo(this.value)">
     </select>
 </td>
 </table>

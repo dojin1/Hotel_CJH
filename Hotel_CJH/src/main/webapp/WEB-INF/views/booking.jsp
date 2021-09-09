@@ -83,7 +83,7 @@ $(document)
 	  $('#trueRoom').empty();
       //console.log(result);
       $.each(result,function(ndx,value) {
-         str='<option value="'+value['roomcode']+'">'+value['roomname']+','+value['typename']+','+value['max_howmany']+','+value['howmuch']+'</option>';
+         str='<option value="'+value['roomcode']+'">'+value['roomname']+' '+value['typename']+' '+value['max_howmany']+' '+value['howmuch']+'</option>';
          $('#trueRoom').append(str);
       })
    },'json');
@@ -92,7 +92,7 @@ $(document)
    $.post("http://localhost:8079/app/searchRoom",{checkin:checkin,checkout:checkout},function(result){
 	   console.log(checkin,checkout);
 	   $.each(result,function(ndx,value){
-		   str='<option value="'+value['bookcode']+'" >'+value['roomname']+','+value['typename']+','+value['howmany']+','+value['booker']+','+value['mobile']+'['+value['checkin']+'~'+value['checkout']+']</option>'+
+		   str='<option value="'+value['bookcode']+'" >'+value['roomname']+' '+value['typename']+' '+value['howmany']+' '+value['booker']+' '+value['mobile']+' '+'['+value['checkin']+' ~ '+value['checkout']+']</option>'+
 		   '<option id="a'+value['bookcode']+'" style="display:none;" >'+value['roomname']+','+value['typename']+','+value['howmany']+','+value['max_howmany']+','+value['checkin']+','+value['checkout']+','+value['howmuch']+','+value['booker']+','+value['mobile']+','+value['bookcode']+'</option>';
 		   $('#falseRoom').append(str);
 	   })
@@ -101,9 +101,9 @@ $(document)
 
 .on('click','#trueRoom option',function(){
 	$('#txtName,#txtType,#txtNum,#txtSub,#txtMobile,#price,#bookcode').val('');
-	$('#roomcode').val($(this).val()); //이거 안지우길 잘했다^^ 굿
+	$('#roomcode').val($(this).val()); 
 	let str=$(this).text();
-	let ar=str.split(','); // ','를 기준으로 자름.
+	let ar=str.split(' '); // ','를 기준으로 자름.
 	$('#txtName').val(ar[0]);
 	$('#txtType option:contains("'+ar[1]+'")').prop('selected',true);
 	$('#maxNum').val(ar[2]);
@@ -187,7 +187,7 @@ $(document)
 				 mobile:$('#txtMobile').val()},
 				 function(result){
 					if(result=='ok'){
-						$('#roomSearch').trigger('click');
+						$('#roomSearch').trigger('click'); //트리거 방아쇠 클릭하면 실행
 						$('#btnEmpty').trigger('click');
 					} else{
 						alert('예약이 완료되지 않았습니다.(DB오류)');
@@ -205,7 +205,6 @@ $(document)
 	
 	return false;
 })
-
 .on('change','#checkin1,#checkout1',function(){
 	let checkin=$('#checkin1').val();
 	let checkout=$('#checkout1').val();

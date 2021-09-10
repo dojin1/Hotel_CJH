@@ -101,6 +101,7 @@ $(document)
 
 .on('click','#trueRoom option',function(){
 	$('#txtName,#txtType,#txtNum,#txtSub,#txtMobile,#price,#bookcode').val('');
+	$('#falseRoom option').prop('selected',false);
 	$('#roomcode').val($(this).val()); 
 	let str=$(this).text();
 	let ar=str.split(' '); // ','를 기준으로 자름.
@@ -117,6 +118,7 @@ $(document)
 
 .on('click','#btnEmpty',function(){
 	$('#txtName,#txtType,#txtNum,#maxNum,#checkin1,#checkout1,#txtPay,#txtSub,#txtMobile,#price,#bookcode').val('');
+	$('select option').prop('selected',false);
 	return false;
 })
 
@@ -223,7 +225,7 @@ $(document)
 function getInfo(num) {
 	let str=$("#a"+num).text();
 	let ar=str.split(','); // ','를 기준으로 자름.
-	
+	$('#trueRoom option').prop('selected',false);
 	$('#txtName').val(ar[0]);
 	$('#txtType option:contains("'+ar[1]+'")').prop('selected',true);
 	$('#txtNum').val(ar[2]);

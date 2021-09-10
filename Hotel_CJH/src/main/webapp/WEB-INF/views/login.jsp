@@ -11,9 +11,11 @@
      body,input,select {
      font-family: 'Gowun Batang', serif; 
        }
+     body{background-color: #FFE6CC;;}
   </style>
 <body>
-로그인 페이지 입니다. 아이디와 비밀번호를 입력해주세요. <br><br>
+<로그인> 페이지 입니다. 아이디와 비밀번호를 입력해주세요. <br>
+[취소] 클릭시 <홈화면> 으로 이동합니다. <br><br>
 <form method="post" action="/app/check_user/" id=frmLogin>
 	아이디명: <input type=text name=userid><br><br>
 	비밀번호: <input type=text name=userpw><br><br>

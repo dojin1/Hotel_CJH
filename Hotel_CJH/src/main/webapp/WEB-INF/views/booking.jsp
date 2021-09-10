@@ -13,13 +13,16 @@
      body,input,select {
        font-family: 'Gowun Batang', serif; 
        }
+     body{ 
+     	background-image:url('https://cdn.pixabay.com/photo/2018/09/30/14/05/hotel-3713613_960_720.jpg');
+     } 
   </style>
 <body>
  <div class="0" style="float: left;">
-    <a href='/app/booking' id="roomReserve">예약관리</a>
+    <a style="color:Red;" id="roomReserve">예약관리</a>
     <a href='/app/room' id="roomControl">객실관리</a>
     <a href='/app/logout'>로그아웃</a>
-<table style="border:1px solid;">
+<table>
     <td>
     	숙박기간 <input type="date" id=checkin>~<input type="date" id=checkout><br><br>
         객실분류  <select name="classroom" id="classRoom">
@@ -30,14 +33,14 @@
             </select>
 <input type="button" value="조회" id=roomSearch><br><br><br>
 <input type="button" value="예약가능 객실" ><br>
-<select size=10 style='width:365px; height:242px;' id=trueRoom>
-</select><br><br>
+<select size=10 style='width:365px; height:325px;' id=trueRoom>
+</select>
  </td>
  </table>
 </div>
 <br>
 <div class="2" style="float: left; margin-left: 50px;">
-<table style="border:1px solid;">
+<table>
 <td>
 객실이름&nbsp; <input type="text" name=room id=txtName readonly><input type=hidden id=bookcode><input type=hidden id=roomcode><br><br>
 객실종류&nbsp;
@@ -61,7 +64,7 @@
 </table>
 </div>
 <div class="3" style="float:left; margin-left: 50px;">
-<table style="border:1px solid;">
+<table">
 <td>
 	<input type="button" value="예약된 객실" ><br>
     <select size=10 style='width:600px; height:450px;' id=falseRoom onchange="getInfo(this.value)">

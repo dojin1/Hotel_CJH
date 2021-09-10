@@ -11,27 +11,28 @@
      @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
      body,input,select {
        font-family: 'Gowun Batang', serif; 
+       
        }
+   	 body{background-color: #FFE6CC;}
+     
   </style>
 <body>
 <div class="1" style="float: left;">
     <a href='/app/booking' id="roomReserve">예약관리</a>
-    <a href='/app/room' id="roomControl">객실관리</a>
+    <a style="color:blue;" id="roomControl">객실관리</a>
     <a href='/app/logout'>로그아웃</a><br>
 <table style="border:1px solid;">
 <td>
-<select size=10 style='width:250px;' id=selRoom>
-</select><br><br>
 <input type="button" id="btnlist" value="객실목록"><br>
-<select id="roomlist" size="10" style='width:240px; height:250px;' >
-    <option>백두산</option>
-    <option>한라산</option>
-    <option>금강산</option>
-    <option>내장산</option>
-</select><br><br>
+<select size=10 style='width:250px; background-color: #FFE6CC;' id=selRoom>
+</select>
 </td>
 </table>
 </div>
+
+
+
+
 
 <div class="2" style="float:left; margin-left: 100px; margin-top: 20px;">
 <table style="border:1px solid;">

@@ -10,9 +10,10 @@
      body,input,select {
        font-family: 'Gowun Batang', serif; 
        }
+    body{background-color: #FFE6CC;}
   </style>
 <body>
-호텔 관리 프로그램입니다.<br><br>
+호텔관리 프로그램 홈화면 입니다.<br><br>
 <a href='selected?path=login'>로그인</a>&nbsp;&nbsp;
 <a href='selected?path=newbie'>회원가입</a>
 </body>

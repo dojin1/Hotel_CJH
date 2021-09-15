@@ -14,7 +14,7 @@
        font-family: 'Gowun Batang', serif; 
        }
      body{ 
-     	background-image:url('https://cdn.pixabay.com/photo/2018/09/30/14/05/hotel-3713613_960_720.jpg');
+     	background-color: #FFE6CC;
      } 
   </style>
 <body>
@@ -33,7 +33,7 @@
             </select>
 <input type="button" value="조회" id=roomSearch><br><br><br>
 <input type="button" value="예약가능 객실" ><br>
-<select size=10 style='width:365px; height:325px;' id=trueRoom>
+<select size=10 style='width:365px; height:325px; background-color: #FFE6CC;' id=trueRoom>
 </select>
  </td>
  </table>
@@ -52,10 +52,10 @@
 숙박인원&nbsp; <input type="number" min="1" dafault=1 id=txtNum>명<br><br>
 최대인원&nbsp; <input type="number" min="1" dafault=1 id=maxNum readonly>명<br><br>
 숙박기간&nbsp; <input type="date" id=checkin1 readonly>~<input type="date" id=checkout1 readonly><br><br>
-1박요금&nbsp; <input type="number" min="1" dafault=1  id=txtPay readonly>원<br><br>
+일박요금&nbsp; <input type="number" min="1" dafault=1  id=txtPay readonly>원<br><br>
 총숙박비&nbsp; <input type="number" id=price readonly>원<br><br>
-예약자명   <input type="text" id=txtSub><br><br>
-모바일번호 <input type="text" id=txtMobile><br><br>
+예약자명&nbsp; <input type="text" id=txtSub><br><br>
+전화번호&nbsp; <input type="text" id=txtMobile><br><br>
 
 <input type="button" value="예약완료" style="width: 80px;" id=btnAdd>
 <input type="button" value="비우기" style="width: 80px;" id=btnEmpty>
@@ -67,7 +67,7 @@
 <table">
 <td>
 	<input type="button" value="예약된 객실" ><br>
-    <select size=10 style='width:600px; height:450px;' id=falseRoom onchange="getInfo(this.value)">
+    <select size=10 style='width:600px; height:450px; background-color: #FFE6CC;' id=falseRoom onchange="getInfo(this.value)">
     </select>
 </td>
 </table>

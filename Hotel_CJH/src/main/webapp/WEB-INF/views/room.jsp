@@ -46,7 +46,7 @@
 </select><br><br>
 숙박인원&nbsp; <input type="number" min="1" id=textNum>명<br><br>
 
-1박요금&nbsp; <input type="text" id=textPay>원<br><br>
+일박요금&nbsp; <input type="text" id=textPay>원<br><br>
 
 <input type="button" value="등록" id=btnAdd style="width: 80px;">
 <input type="button" value="삭제" id=btnDelete style="width: 80px;" >

@@ -15,7 +15,7 @@
   </style>
 <body>
 <회원가입> 페이지 입니다. 아래 빈칸을 채워주세요.<br>
-[취소] 클릭시 <홈화면> 으로 이동합니다. <br><br>
+[취소] 클릭시 <홈화면> 으로 이동합니다.. <br><br>
 <form method="post" action="/app/signin/">
 회원실명: <input type="text" name=newname id=newname ><br><br>
 아이디명: <input type="text" name=newid id=newid ><br><br>

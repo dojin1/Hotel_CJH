@@ -11,21 +11,27 @@
      body,input,select {
        font-family: 'Gowun Batang', serif; 
        }
-     body{background-color: #FFE6CC;}  
+     body{
+     background-image:url(https://cdn.pixabay.com/photo/2018/09/30/14/05/hotel-3713613_960_720.jpg);
+     background-size:100%;
+     background-color: #FFE6CC;
+     text-align:center;
+     }
+       
   </style>
-<body>
+<body text="#FFE650">
 <회원가입> 페이지 입니다. 아래 빈칸을 채워주세요.<br>
 [취소] 클릭시 <홈화면> 으로 이동합니다. <br><br>
 <form method="post" action="/app/signin/">
 회원실명: <input type="text" name=newname id=newname ><br><br>
 아이디명: <input type="text" name=newid id=newid ><br><br>
 비밀번호: <input type="password" name=newpw id=newpw><br><br>
-비밀번호: <input type="password" name=newpw2 id=newpw2> 재확인<br><br>
+비번확인: <input type="password" name=newpw2 id=newpw2><br><br>
 
-<input type=submit value="회원가입" id=join style="background-color:#FFD0AF; color: #000000;">
+<input type=submit value="회원가입" id=join style="background-color:#FFD0AF; color: #0000FF;">
 </form>
 <form method="post" action="/app/" style=padding-top:10px;>
-<input type=submit value="취소" style="background-color:#FFD0AF; color: #000000;">
+<input type=submit value="취소" style="background-color:#FFD0AF; color: #CD1039;">
 </form>
 </body>
 <script src='http://code.jquery.com/jquery-3.5.0.js'></script>

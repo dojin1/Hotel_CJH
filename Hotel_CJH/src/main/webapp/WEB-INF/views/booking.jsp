@@ -1,76 +1,106 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page session="true" %>
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약관리</title>
 </head>
-  <style>
-     @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
-     body,input,select {
-       font-family: 'Gowun Batang', serif; 
-       }
-     body{ 
-     	background-color: #FFE6CC;
-     } 
-  </style>
+<style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+    body,input,select {
+      font-family: 'Gowun Batang', serif; 
+      }
+    body{ 
+       background-color: #F0F8FF;
+    } 
+   table {
+       margin-left:auto; 
+       margin-right:auto;
+   }
+   .tg  {border-collapse:collapse;border-color:#aabcfe;border-spacing:0;}
+   .tg td{background-color:#FFE6EB;border-color:#aabcfe;border-style:solid;border-width:1px;color:#669;
+     font-size:20px;overflow:hidden;word-break:normal;text-align: center;}
+   .tg th{background-color:#b9c9fe;border-color:#aabcfe;border-style:solid;border-width:1px;color:#039;
+     font-size:35px;font-weight:normal;overflow:hidden;word-break:normal;text-align: center;}
+   .tg .tg-hmp3{background-color:#FFE6EB;vertical-align : middle;}
+   .tg .tg-0lax{vertical-align : middle;}
+</style>
 <body>
- <div class="0" style="float: left;">
-    <a style="color:Red;" id="roomReserve">예약관리</a>
+ <div class="0">
+    <a style="color:Red; margin-left:120px;" id="roomReserve">예약관리</a>
     <a href='/app/room' id="roomControl">객실관리</a>
-    <a href='/app/logout'>로그아웃</a>
-<table>
-    <td>
-    	숙박기간 <input type="date" id=checkin>~<input type="date" id=checkout><br><br>
-        객실분류  <select name="classroom" id="classRoom">
-        <option value='all'>전체</option>
-         		<c:forEach items="${roomtype}" var="type">
-					<option value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
-		  		</c:forEach>
-            </select>
-<input type="button" value="조회" id=roomSearch><br><br><br>
-<input type="button" value="예약가능 객실" ><br>
-<select size=10 style='width:365px; height:325px; background-color: #FFE6CC;' id=trueRoom>
-</select>
- </td>
- </table>
-</div>
-<br>
-<div class="2" style="float: left; margin-left: 50px;">
-<table>
-<td>
-객실이름&nbsp; <input type="text" name=room id=txtName readonly><input type=hidden id=bookcode><input type=hidden id=roomcode><br><br>
-객실종류&nbsp;
-<select size=1 style='width:150px;' id=txtType>
-	<c:forEach items="${roomtype}" var="type" >
-		<option  disabled="disabled" value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
-	</c:forEach>
-</select><br><br>
-숙박인원&nbsp; <input type="number" min="1" dafault=1 id=txtNum>명<br><br>
-최대인원&nbsp; <input type="number" min="1" dafault=1 id=maxNum readonly>명<br><br>
-숙박기간&nbsp; <input type="date" id=checkin1 readonly>~<input type="date" id=checkout1 readonly><br><br>
-일박요금&nbsp; <input type="number" min="1" dafault=1  id=txtPay readonly>원<br><br>
-총숙박비&nbsp; <input type="number" id=price readonly>원<br><br>
-예약자명&nbsp; <input type="text" id=txtSub><br><br>
-전화번호&nbsp; <input type="text" id=txtMobile><br><br>
-
-<input type="button" value="예약완료" style="width: 80px;" id=btnAdd>
-<input type="button" value="비우기" style="width: 80px;" id=btnEmpty>
-<input type="button" value="예약취소" style="width: 80px;" id=btncancel>
-</td>
-</table>
-</div>
-<div class="3" style="float:left; margin-left: 50px;">
-<table">
-<td>
-	<input type="button" value="예약된 객실" ><br>
-    <select size=10 style='width:600px; height:450px; background-color: #FFE6CC;' id=falseRoom onchange="getInfo(this.value)">
-    </select>
-</td>
-</table>
+    <a href='/app/logout'>로그아웃</a><br><br>
+   <table class="tg" style="undefined;table-layout: fixed; width: 446px">
+   <colgroup>
+   <col style="width: 350px">
+   <col style="width: 350px">
+   <col style="width: 390px">
+   </colgroup>
+   <thead>
+     <tr>
+       <th class="tg-0lax" style="height: 70px; background-color:#657b83; color:white;">객실 조회</th>
+       <th class="tg-0lax" style="background-color:#657b83; color:white;">예약관리</th>
+       <th class="tg-0lax" style="background-color:#657b83; color:white;" >예약된 객실</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr>
+       <td class="tg-0lax" style="height: 300px">
+          <span style="font-weight:bold;">숙박기간</span><br>
+          Check in &ensp;<input type="date" id=checkin style="width: 200px; height:30px"><br>
+          Check out <input type="date" id=checkout style="width: 200px; height:30px"><br><br>
+          <span style="font-weight:bold;">객실분류</span><br>
+           <select name="classroom" id="classRoom" style="width: 200px; height:30px">
+               <option value='all'>전체</option>
+                <c:forEach items="${roomtype}" var="type">
+            <option value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
+              </c:forEach>
+             </select>
+         <input type="button" value="조회" id=roomSearch style="color:#DB631F;">
+       </td>
+       <td class="tg-hmp3" rowspan="2" style="height: 600px; line-height:100%;">
+          <lable style="font-weight:bold;">객실이름</lable>&nbsp;&nbsp;
+          <input type="text" name=room id=txtName style="width: 200px; height:30px" readonly><input type=hidden id=bookcode><input type=hidden id=roomcode><br><br>
+         <lable style="font-weight:bold;">객실종류</lable>&nbsp;&nbsp;
+         <select size=1 style="width: 200px; height:30px" id=txtType>
+            <c:forEach items="${roomtype}" var="type" >
+               <option  disabled="disabled" value='${type.typecode}'>${type.name}</option> <!-- val하면 value값 text()=${type.name}값을 가져옴 -->
+            </c:forEach>
+         </select><br><br>
+         <lable style="font-weight:bold;">숙박인원</lable>&nbsp;&nbsp;
+         <input type="number" min="1" dafault=1 id=txtNum style="width: 180px; height:30px">명<br><br>
+         <lable style="font-weight:bold;">최대인원</lable>&nbsp;&nbsp;
+         <input type="number" min="1" dafault=1 id=maxNum style="width: 180px; height:30px" readonly>명<br><br>
+         <lable style="font-weight:bold;">숙박기간</lable>&nbsp;&nbsp;
+         <input type="date" id=checkin1 style="width: 200px; height:30px" readonly><br>
+         &emsp;&emsp;&emsp;&ensp;~ <input type="date" id=checkout1 style="width: 200px; height:30px" readonly><br><br>
+         <lable style="font-weight:bold;">1박요금</lable>&nbsp;&nbsp;
+         <input type="number" min="1" dafault=1  id=txtPay style="width: 180px; height:30px" readonly>원<br><br>
+         <lable style="font-weight:bold;">총숙박비</lable>&nbsp;
+         <input type="number" id=price style="width: 180px; height:30px" readonly>원<br><br>
+         <lable style="font-weight:bold;">예약자명</lable>&nbsp;&nbsp;
+         <input type="text" style="width: 200px; height:30px" id=txtSub><br><br>
+         <lable style="font-weight:bold;">전화번호</lable>&nbsp;&nbsp;
+         <input type="text" style="width: 200px; height:30px" id=txtMobile><br><br>
+         
+         <input type="button" value="예약완료" style="width: 100px; color:#0000FF;" id=btnAdd>
+         <input type="button" value="비우기" style="width: 100px;" id=btnEmpty>
+         <input type="button" value="예약취소" style="width: 100px; color:#CD1039;" id=btncancel>
+       </td>
+       <td class="tg-0lax" rowspan="2" style="height: 600px">
+          <select size=10 style='width:650px; height:600px; background-color: #FFE6EB;' id=falseRoom onchange="getInfo(this.value)">
+          </select>
+       </td>
+     </tr>
+     <tr>
+       <td class="tg-0lax" style="height: 300px">
+          <span style="font-weight:bold;">예약가능 객실</span><br>
+         <select size=10 style='width:340px; height:250px; background-color: #FFE6EB;' id=trueRoom>
+         </select>
+      </td>
+     </tr>
+   </tbody>
+   </table>
 </div>
 </body>
 <script src='http://code.jquery.com/jquery-3.5.0.js'></script>
@@ -130,8 +160,8 @@ $(document)
 	      function(result){
 	      console.log(result);
 	      if(result=="ok"){
-	    	  $('#btnEmpty').trigger('click'); //입력란 비우기.
 	    	  $('#falseRoom option:selected').remove(); //room리스트에서 제거.
+	    	  $('#btnEmpty').trigger('click'); //입력란 비우기.
 	      }
 	   },'text');
 	   return false;

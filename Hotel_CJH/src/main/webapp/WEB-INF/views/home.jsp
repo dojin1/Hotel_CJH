@@ -3,7 +3,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>홈</title>
+   <title>홈</title>
 </head>
  <style>
      @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
@@ -13,15 +13,17 @@
     body{
     background-image:url(https://cdn.pixabay.com/photo/2018/09/30/14/05/hotel-3713613_960_720.jpg);
     background-size:100% 100%;
+    text-align:center;
     }
+ 
   </style>
-<body text="#FFC0CB">
-호텔관리 프로그램 홈화면 입니다.<br><br>
+<body text=#9986EE>
+호텔관리 프로그램<br><br>
 <form method="post" action="/app/login" style=padding-top:10px;>
-<input type=submit value="로그인" style="background-color:#000000; color: #FFC0CB;">
+<input type=submit value="로그인" style="background-color:#000000; color:#FFC0CB; border:none;">
 </form>
 <form method="post" action="/app/newbie">
-<input type=submit value="회원가입" style="background-color:#000000; color: #FFC0CB;">
+<input type=submit value="회원가입" style="background-color:#000000; color: Yellow; border:none;">
 </form>
 <!--  <a href='selected?path=login'>로그인</a>&nbsp;&nbsp;
 <a href='selected?path=newbie'>회원가입</a>-->
